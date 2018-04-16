@@ -1,0 +1,84 @@
+Description: ensure that gnat tools execute the same GCC version
+ The "gcc" default compiler may differ from "gcc-BV", where BV is the
+ GCC base version of the tools.
+ .
+ Gnatchop already handles this issue by extracting parts of the resolved path
+ to its command name at run time.
+Forwarded: not-needed
+Author: Ludovic Brenta <lbrenta@debian.org>
+Author: Nicolas Boulenguez <nicolas@debian.org>
+
+Index: b/src/gcc/ada/gnatlink.adb
+===================================================================
+--- a/src/gcc/ada/gnatlink.adb
++++ b/src/gcc/ada/gnatlink.adb
+@@ -136,7 +136,8 @@ procedure Gnatlink is
+    --  This table collects the arguments to be passed to compile the binder
+    --  generated file.
+ 
+-   Gcc : String_Access := Program_Name ("gcc", "gnatlink");
++   Gcc : String_Access
++     := Program_Name ("gcc-" & Gnatvsn.Library_Version, "gnatlink");
+ 
+    Read_Mode : constant String := "r" & ASCII.NUL;
+ 
+@@ -1408,7 +1409,8 @@ procedure Gnatlink is
+       end if;
+ 
+       Write_Line ("  --GCC=comp Use 'comp' as the compiler rather than 'gcc'");
+-      Write_Line ("  --LINK=lnk Use 'lnk' as the linker rather than 'gcc'");
++      Write_Line ("  --LINK=lnk Use 'lnk' for the linking rather than 'gcc-"
++        & Gnatvsn.Library_Version & "'");
+       Write_Eol;
+       Write_Line ("  [non-Ada-objects]  list of non Ada object files");
+       Write_Line ("  [linker-options]   other options for the linker");
+Index: b/src/gcc/ada/make.adb
+===================================================================
+--- a/src/gcc/ada/make.adb
++++ b/src/gcc/ada/make.adb
+@@ -443,9 +443,12 @@ package body Make is
+    -- Compiler, Binder & Linker Data and Subprograms --
+    ----------------------------------------------------
+ 
+-   Gcc      : String_Access := Program_Name ("gcc", "gnatmake");
+-   Gnatbind : String_Access := Program_Name ("gnatbind", "gnatmake");
+-   Gnatlink : String_Access := Program_Name ("gnatlink", "gnatmake");
++   Gcc      : String_Access := Program_Name
++     ("gcc-" & Gnatvsn.Library_Version, "gnatmake");
++   Gnatbind : String_Access := Program_Name
++     ("gnatbind-" & Gnatvsn.Library_Version, "gnatmake");
++   Gnatlink : String_Access := Program_Name
++     ("gnatlink-" & Gnatvsn.Library_Version, "gnatmake");
+    --  Default compiler, binder, linker programs
+ 
+    Gcc_Path      : String_Access :=
+Index: b/src/gcc/ada/mdll-utl.adb
+===================================================================
+--- a/src/gcc/ada/mdll-utl.adb
++++ b/src/gcc/ada/mdll-utl.adb
+@@ -29,6 +29,7 @@ with Ada.Text_IO;
+ with Ada.Exceptions;
+ 
+ with GNAT.Directory_Operations;
++with Gnatvsn;
+ with Osint;
+ 
+ package body MDLL.Utl is
+@@ -39,7 +40,7 @@ package body MDLL.Utl is
+    Dlltool_Name  : constant String := "dlltool";
+    Dlltool_Exec  : OS_Lib.String_Access;
+ 
+-   Gcc_Name      : constant String := "gcc";
++   Gcc_Name      : constant String := "gcc-" & Gnatvsn.Library_Version;
+    Gcc_Exec      : OS_Lib.String_Access;
+ 
+    Gnatbind_Name : constant String := "gnatbind";
+@@ -212,7 +213,7 @@ package body MDLL.Utl is
+          end;
+       end if;
+ 
+-      Print_Command ("gcc", Arguments (1 .. A));
++      Print_Command (Gcc_Name, Arguments (1 .. A));
+ 
+       OS_Lib.Spawn (Gcc_Exec.all, Arguments (1 .. A), Success);
+ 

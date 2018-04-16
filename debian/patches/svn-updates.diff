@@ -1,0 +1,14 @@
+# DP: updates from the 8 branch upto 2018xxyy (r253114).
+
+last_update()
+{
+	cat > ${dir}LAST_UPDATED <EOF
+Sat Sep 23 11:21:54 CEST 2017
+Sat Sep 23 09:21:54 UTC 2017 (revision 253114)
+EOF
+}
+
+LANG=C svn diff svn://gcc.gnu.org/svn/gcc/tags/gcc_7_2_0_release svn://gcc.gnu.org/svn/gcc/branches/gcc-7-branch \
+	| sed -r 's,^--- (\S+)\t(\S+)(.*)$,--- a/src/\1\t\2,;s,^\+\+\+ (\S+)\t(\S+)(.*)$,+++ b/src/\1\t\2,' \
+	| awk '/^Index:.*\.(class|texi)/ {skip=1; next} /^Index:/ { skip=0 } skip==0'
+
