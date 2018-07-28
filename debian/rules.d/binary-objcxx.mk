@@ -42,7 +42,7 @@ endif
 	debian/dh_rmemptydirs -p$(p_objcx)
 
 ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTONS)))
-	dwz \
+	$(DWZ) \
 	  $(d_objcx)/$(gcc_lexec_dir)/cc1objplus
 endif
 	dh_strip -p$(p_objcx) \

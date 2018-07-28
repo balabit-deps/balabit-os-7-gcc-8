@@ -68,7 +68,7 @@ Index: b/src/gcc/config/rs6000/linux64.h
 ===================================================================
 --- a/src/gcc/config/rs6000/linux64.h
 +++ b/src/gcc/config/rs6000/linux64.h
-@@ -477,13 +477,13 @@ extern int dot_symbols;
+@@ -470,13 +470,13 @@ extern int dot_symbols;
  					   " -m elf64ppc")
  #endif
  
@@ -182,5 +182,5 @@ Index: b/src/gcc/config/riscv/linux.h
  #define LINK_SPEC "\
 +-hash-style=gnu \
  -melf" XLEN_SPEC "lriscv \
+ %{mno-relax:--no-relax} \
  %{shared} \
-   %{!shared: \

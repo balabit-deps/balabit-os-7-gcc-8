@@ -216,7 +216,7 @@ Index: b/src/gcc/config.gcc
  tm_defines=
  xm_defines=
  # Set this to force installation and use of collect2.
-@@ -303,12 +314,14 @@ aarch64*-*-*)
+@@ -304,12 +315,14 @@ aarch64*-*-*)
  	extra_headers="arm_fp16.h arm_neon.h arm_acle.h"
  	c_target_objs="aarch64-c.o"
  	cxx_target_objs="aarch64-c.o"
@@ -231,7 +231,7 @@ Index: b/src/gcc/config.gcc
  	extra_options="${extra_options} g.opt"
  	;;
  am33_2.0-*-linux*)
-@@ -328,6 +341,7 @@ arm*-*-*)
+@@ -329,6 +342,7 @@ arm*-*-*)
  	target_type_format_char='%'
  	c_target_objs="arm-c.o"
  	cxx_target_objs="arm-c.o"
@@ -239,7 +239,7 @@ Index: b/src/gcc/config.gcc
  	extra_options="${extra_options} arm/arm-tables.opt"
  	target_gtfiles="\$(srcdir)/config/arm/arm-builtins.c"
  	;;
-@@ -360,6 +374,7 @@ i[34567]86-*-*)
+@@ -361,6 +375,7 @@ i[34567]86-*-*)
  	cpu_type=i386
  	c_target_objs="i386-c.o"
  	cxx_target_objs="i386-c.o"
@@ -247,7 +247,7 @@ Index: b/src/gcc/config.gcc
  	extra_objs="x86-tune-sched.o x86-tune-sched-bd.o x86-tune-sched-atom.o x86-tune-sched-core.o"
  	extra_options="${extra_options} fused-madd.opt"
  	extra_headers="cpuid.h mmintrin.h mm3dnow.h xmmintrin.h emmintrin.h
-@@ -389,6 +404,7 @@ x86_64-*-*)
+@@ -390,6 +405,7 @@ x86_64-*-*)
  	cpu_type=i386
  	c_target_objs="i386-c.o"
  	cxx_target_objs="i386-c.o"
@@ -255,7 +255,7 @@ Index: b/src/gcc/config.gcc
  	extra_options="${extra_options} fused-madd.opt"
  	extra_objs="x86-tune-sched.o x86-tune-sched-bd.o x86-tune-sched-atom.o x86-tune-sched-core.o"
  	extra_headers="cpuid.h mmintrin.h mm3dnow.h xmmintrin.h emmintrin.h
-@@ -438,6 +454,7 @@ microblaze*-*-*)
+@@ -439,6 +455,7 @@ microblaze*-*-*)
          ;;
  mips*-*-*)
  	cpu_type=mips
@@ -263,7 +263,7 @@ Index: b/src/gcc/config.gcc
  	extra_headers="loongson.h msa.h"
  	extra_objs="frame-header-opt.o"
  	extra_options="${extra_options} g.opt fused-madd.opt mips/mips-tables.opt"
-@@ -493,6 +510,7 @@ sparc*-*-*)
+@@ -494,6 +511,7 @@ sparc*-*-*)
  	cpu_type=sparc
  	c_target_objs="sparc-c.o"
  	cxx_target_objs="sparc-c.o"
@@ -271,7 +271,7 @@ Index: b/src/gcc/config.gcc
  	extra_headers="visintrin.h"
  	;;
  spu*-*-*)
-@@ -500,6 +518,7 @@ spu*-*-*)
+@@ -501,6 +519,7 @@ spu*-*-*)
  	;;
  s390*-*-*)
  	cpu_type=s390
@@ -279,7 +279,7 @@ Index: b/src/gcc/config.gcc
  	extra_options="${extra_options} fused-madd.opt"
  	extra_headers="s390intrin.h htmintrin.h htmxlintrin.h vecintrin.h"
  	;;
-@@ -529,10 +548,13 @@ tilepro*-*-*)
+@@ -530,10 +549,13 @@ tilepro*-*-*)
  esac
  
  tm_file=${cpu_type}/${cpu_type}.h
@@ -293,7 +293,7 @@ Index: b/src/gcc/config.gcc
  extra_modes=
  if test -f ${srcdir}/config/${cpu_type}/${cpu_type}-modes.def
  then
-@@ -801,8 +823,10 @@ case ${target} in
+@@ -802,8 +824,10 @@ case ${target} in
    esac
    c_target_objs="${c_target_objs} glibc-c.o"
    cxx_target_objs="${cxx_target_objs} glibc-c.o"
@@ -304,7 +304,7 @@ Index: b/src/gcc/config.gcc
    ;;
  *-*-netbsd*)
    tm_p_file="${tm_p_file} netbsd-protos.h"
-@@ -3173,6 +3197,10 @@ if [ "$common_out_file" = "" ]; then
+@@ -3185,6 +3209,10 @@ if [ "$common_out_file" = "" ]; then
    fi
  fi
  
@@ -315,7 +315,7 @@ Index: b/src/gcc/config.gcc
  # Support for --with-cpu and related options (and a few unrelated options,
  # too).
  case ${with_cpu} in
-@@ -4690,6 +4718,7 @@ case ${target} in
+@@ -4726,6 +4754,7 @@ case ${target} in
  		out_file="${cpu_type}/${cpu_type}.c"
  		c_target_objs="${c_target_objs} ${cpu_type}-c.o"
  		cxx_target_objs="${cxx_target_objs} ${cpu_type}-c.o"
@@ -816,7 +816,7 @@ Index: b/src/gcc/config/i386/i386.h
 ===================================================================
 --- a/src/gcc/config/i386/i386.h
 +++ b/src/gcc/config/i386/i386.h
-@@ -702,6 +702,9 @@ extern const char *host_detect_local_cpu
+@@ -705,6 +705,9 @@ extern const char *host_detect_local_cpu
  /* Target Pragmas.  */
  #define REGISTER_TARGET_PRAGMAS() ix86_register_pragmas ()
  
@@ -1161,7 +1161,7 @@ Index: b/src/gcc/config/powerpcspe/powerpcspe.h
 ===================================================================
 --- a/src/gcc/config/powerpcspe/powerpcspe.h
 +++ b/src/gcc/config/powerpcspe/powerpcspe.h
-@@ -822,6 +822,9 @@ extern unsigned char rs6000_recip_bits[]
+@@ -829,6 +829,9 @@ extern unsigned char rs6000_recip_bits[]
  #define TARGET_CPU_CPP_BUILTINS() \
    rs6000_cpu_cpp_builtins (pfile)
  
@@ -1214,7 +1214,7 @@ Index: b/src/gcc/config/rs6000/linux64.h
 ===================================================================
 --- a/src/gcc/config/rs6000/linux64.h
 +++ b/src/gcc/config/rs6000/linux64.h
-@@ -398,6 +398,19 @@ extern int dot_symbols;
+@@ -391,6 +391,19 @@ extern int dot_symbols;
      }							\
    while (0)
  
@@ -1288,7 +1288,7 @@ Index: b/src/gcc/config/rs6000/rs6000-protos.h
 ===================================================================
 --- a/src/gcc/config/rs6000/rs6000-protos.h
 +++ b/src/gcc/config/rs6000/rs6000-protos.h
-@@ -232,6 +232,9 @@ extern void rs6000_target_modify_macros
+@@ -233,6 +233,9 @@ extern void rs6000_target_modify_macros
  extern void (*rs6000_target_modify_macros_ptr) (bool, HOST_WIDE_INT,
  						HOST_WIDE_INT);
  
@@ -1302,7 +1302,7 @@ Index: b/src/gcc/config/rs6000/rs6000.h
 ===================================================================
 --- a/src/gcc/config/rs6000/rs6000.h
 +++ b/src/gcc/config/rs6000/rs6000.h
-@@ -797,6 +797,9 @@ extern unsigned char rs6000_recip_bits[]
+@@ -800,6 +800,9 @@ extern unsigned char rs6000_recip_bits[]
  #define TARGET_CPU_CPP_BUILTINS() \
    rs6000_cpu_cpp_builtins (pfile)
  
@@ -1316,7 +1316,7 @@ Index: b/src/gcc/config/rs6000/t-rs6000
 ===================================================================
 --- a/src/gcc/config/rs6000/t-rs6000
 +++ b/src/gcc/config/rs6000/t-rs6000
-@@ -34,6 +34,10 @@ rs6000-p8swap.o: $(srcdir)/config/rs6000
+@@ -35,6 +35,10 @@ rs6000-p8swap.o: $(srcdir)/config/rs6000
  	$(COMPILE) $<
  	$(POSTCOMPILE)
  
@@ -1568,7 +1568,7 @@ Index: b/src/gcc/configure.ac
 ===================================================================
 --- a/src/gcc/configure.ac
 +++ b/src/gcc/configure.ac
-@@ -1724,6 +1724,7 @@ AC_SUBST(build_subdir)
+@@ -1725,6 +1725,7 @@ AC_SUBST(build_subdir)
  
  tm_file="${tm_file} defaults.h"
  tm_p_file="${tm_p_file} tm-preds.h"
@@ -1576,7 +1576,7 @@ Index: b/src/gcc/configure.ac
  host_xm_file="auto-host.h ansidecl.h ${host_xm_file}"
  build_xm_file="${build_auto} ansidecl.h ${build_xm_file}"
  # We don't want ansidecl.h in target files, write code there in ISO/GNU C.
-@@ -1946,6 +1947,21 @@ for f in $tm_p_file; do
+@@ -1947,6 +1948,21 @@ for f in $tm_p_file; do
    esac
  done
  
@@ -1598,7 +1598,7 @@ Index: b/src/gcc/configure.ac
  xm_file_list=
  xm_include_list=
  for f in $xm_file; do
-@@ -6379,6 +6395,8 @@ AC_SUBST(tm_include_list)
+@@ -6390,6 +6406,8 @@ AC_SUBST(tm_include_list)
  AC_SUBST(tm_defines)
  AC_SUBST(tm_p_file_list)
  AC_SUBST(tm_p_include_list)
@@ -1607,7 +1607,7 @@ Index: b/src/gcc/configure.ac
  AC_SUBST(xm_file_list)
  AC_SUBST(xm_include_list)
  AC_SUBST(xm_defines)
-@@ -6386,6 +6404,7 @@ AC_SUBST(use_gcc_stdint)
+@@ -6397,6 +6415,7 @@ AC_SUBST(use_gcc_stdint)
  AC_SUBST(c_target_objs)
  AC_SUBST(cxx_target_objs)
  AC_SUBST(fortran_target_objs)

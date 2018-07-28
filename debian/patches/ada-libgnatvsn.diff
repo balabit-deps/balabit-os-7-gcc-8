@@ -289,3 +289,21 @@ Index: b/src/gcc/ada/gcc-interface/config-lang.in
  lang_dirs="libada gnattools"
  
  # Ada is not enabled by default for the time being.
+--- a/src/gcc/testsuite/ada/acats/run_acats.sh
++++ b/src/gcc/testsuite/ada/acats/run_acats.sh
+@@ -32,6 +32,15 @@
+ LD_LIBRARY_PATH=$ADA_INCLUDE_PATH:$BASE:$LD_LIBRARY_PATH
+ ADA_OBJECTS_PATH=$ADA_INCLUDE_PATH
+ 
++target_gcc="$BASE/xgcc -B$BASE/"
++target=`$target_gcc -dumpmachine`
++vsn_lib_dir=$BASE/../$target/libgnatvsn
++LD_LIBRARY_PATH=$vsn_lib_dir:$LD_LIBRARY_PATH
++if [ ! -d $vsn_lib_dir ]; then
++   echo libgnatvsn not found in "$vsn_lib_dir", exiting.
++   exit 1
++fi
++
+ if [ ! -d $ADA_INCLUDE_PATH ]; then
+    echo gnatlib missing, exiting.
+    exit 1

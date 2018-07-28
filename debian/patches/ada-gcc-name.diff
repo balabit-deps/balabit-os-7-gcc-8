@@ -1,84 +1,89 @@
-Description: ensure that gnat tools execute the same GCC version
- The "gcc" default compiler may differ from "gcc-BV", where BV is the
- GCC base version of the tools.
+Description: simplifiy detection of machine and version in command name
+ The previous algorithm wrongly tests "End_Of_Prefix > 1",
+ which may happen even if a match has been found.
  .
- Gnatchop already handles this issue by extracting parts of the resolved path
- to its command name at run time.
-Forwarded: not-needed
+ This version reports problems, and always add the suffix to ensure
+ that the gcc called has the same version than the calling tool.
+ .
+ Log for bug 903694 carries regression tests for both bugs.
+ .
+ Note: for historical reasons, gnatchop carries its own version
+ of the old algorithm, which seems to work in our case.
+Bugs-Debian: https://bugs.debian.org/903694
+Bugs-Debian: https://bugs.debian.org/856274
 Author: Ludovic Brenta <lbrenta@debian.org>
 Author: Nicolas Boulenguez <nicolas@debian.org>
 
-Index: b/src/gcc/ada/gnatlink.adb
+Index: b/src/gcc/ada/osint.adb
 ===================================================================
---- a/src/gcc/ada/gnatlink.adb
-+++ b/src/gcc/ada/gnatlink.adb
-@@ -136,7 +136,8 @@ procedure Gnatlink is
-    --  This table collects the arguments to be passed to compile the binder
-    --  generated file.
+--- a/src/gcc/ada/osint.adb
++++ b/src/gcc/ada/osint.adb
+@@ -2205,22 +2205,15 @@ package body Osint is
+    ------------------
  
--   Gcc : String_Access := Program_Name ("gcc", "gnatlink");
-+   Gcc : String_Access
-+     := Program_Name ("gcc-" & Gnatvsn.Library_Version, "gnatlink");
+    function Program_Name (Nam : String; Prog : String) return String_Access is
+-      End_Of_Prefix   : Natural := 0;
+       Start_Of_Prefix : Positive := 1;
+-      Start_Of_Suffix : Positive;
++      Suffix          : constant String := '-' & Gnatvsn.Library_Version;
  
-    Read_Mode : constant String := "r" & ASCII.NUL;
+    begin
+       --  Get the name of the current program being executed
  
-@@ -1408,7 +1409,8 @@ procedure Gnatlink is
-       end if;
+       Find_Program_Name;
  
-       Write_Line ("  --GCC=comp Use 'comp' as the compiler rather than 'gcc'");
--      Write_Line ("  --LINK=lnk Use 'lnk' as the linker rather than 'gcc'");
-+      Write_Line ("  --LINK=lnk Use 'lnk' for the linking rather than 'gcc-"
-+        & Gnatvsn.Library_Version & "'");
-       Write_Eol;
-       Write_Line ("  [non-Ada-objects]  list of non Ada object files");
-       Write_Line ("  [linker-options]   other options for the linker");
-Index: b/src/gcc/ada/make.adb
-===================================================================
---- a/src/gcc/ada/make.adb
-+++ b/src/gcc/ada/make.adb
-@@ -443,9 +443,12 @@ package body Make is
-    -- Compiler, Binder & Linker Data and Subprograms --
-    ----------------------------------------------------
+-      Start_Of_Suffix := Name_Len + 1;
+-
+-      --  Find the target prefix if any, for the cross compilation case.
+-      --  For instance in "powerpc-elf-gcc" the target prefix is
+-      --  "powerpc-elf-"
+-      --  Ditto for suffix, e.g. in "gcc-4.1", the suffix is "-4.1"
+-
++      --  Find directory part if any, and ignore it from now on.
+       for J in reverse 1 .. Name_Len loop
+          if Name_Buffer (J) = '/'
+            or else Name_Buffer (J) = Directory_Separator
+@@ -2231,25 +2224,28 @@ package body Osint is
+          end if;
+       end loop;
  
--   Gcc      : String_Access := Program_Name ("gcc", "gnatmake");
--   Gnatbind : String_Access := Program_Name ("gnatbind", "gnatmake");
--   Gnatlink : String_Access := Program_Name ("gnatlink", "gnatmake");
-+   Gcc      : String_Access := Program_Name
-+     ("gcc-" & Gnatvsn.Library_Version, "gnatmake");
-+   Gnatbind : String_Access := Program_Name
-+     ("gnatbind-" & Gnatvsn.Library_Version, "gnatmake");
-+   Gnatlink : String_Access := Program_Name
-+     ("gnatlink-" & Gnatvsn.Library_Version, "gnatmake");
-    --  Default compiler, binder, linker programs
+-      --  Find End_Of_Prefix
+-
++      --  Find the target prefix if any, for the cross compilation case.
++      --  For instance in "powerpc-elf-gcc" the target prefix is
++      --  "powerpc-elf-"
++      --  Ditto for suffix, e.g. in "gcc-4.1", the suffix is "-4.1"
++      --  In other terms, search and replace Prog with Nam.
+       for J in Start_Of_Prefix .. Name_Len - Prog'Length + 1 loop
+          if Name_Buffer (J .. J + Prog'Length - 1) = Prog then
+-            End_Of_Prefix := J - 1;
+-            exit;
++
++            --  If suffix is present, it must match our version.
++            if J + Prog'Length < Name_Len
++              and then Name_Buffer (J + Prog'Length .. Name_Len) /= Suffix
++            then
++               Fail ("Osint.Program_Name: version mismatch in Debian");
++            end if;
++
++            --  Require our version, as gcc default may differ.
++            return new String'(Name_Buffer (Start_Of_Prefix .. J - 1)
++                                 & Nam & Suffix);
++
+          end if;
+       end loop;
+-
+-      if End_Of_Prefix > 1 then
+-         Start_Of_Suffix := End_Of_Prefix + Prog'Length + 1;
+-      end if;
+-
+-      --  Create the new program name
+-
+-      return new String'
+-        (Name_Buffer (Start_Of_Prefix .. End_Of_Prefix)
+-         & Nam
+-         & Name_Buffer (Start_Of_Suffix .. Name_Len));
++      Fail ("Osint.Program_Name: no match. Please report to Debian.");
+    end Program_Name;
  
-    Gcc_Path      : String_Access :=
-Index: b/src/gcc/ada/mdll-utl.adb
-===================================================================
---- a/src/gcc/ada/mdll-utl.adb
-+++ b/src/gcc/ada/mdll-utl.adb
-@@ -29,6 +29,7 @@ with Ada.Text_IO;
- with Ada.Exceptions;
- 
- with GNAT.Directory_Operations;
-+with Gnatvsn;
- with Osint;
- 
- package body MDLL.Utl is
-@@ -39,7 +40,7 @@ package body MDLL.Utl is
-    Dlltool_Name  : constant String := "dlltool";
-    Dlltool_Exec  : OS_Lib.String_Access;
- 
--   Gcc_Name      : constant String := "gcc";
-+   Gcc_Name      : constant String := "gcc-" & Gnatvsn.Library_Version;
-    Gcc_Exec      : OS_Lib.String_Access;
- 
-    Gnatbind_Name : constant String := "gnatbind";
-@@ -212,7 +213,7 @@ package body MDLL.Utl is
-          end;
-       end if;
- 
--      Print_Command ("gcc", Arguments (1 .. A));
-+      Print_Command (Gcc_Name, Arguments (1 .. A));
- 
-       OS_Lib.Spawn (Gcc_Exec.all, Arguments (1 .. A), Success);
- 
+    ------------------------------

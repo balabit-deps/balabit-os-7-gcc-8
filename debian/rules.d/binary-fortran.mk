@@ -200,7 +200,7 @@ endif
 	debian/dh_rmemptydirs -p$(p_g95)
 
 ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTONS)))
-	dwz \
+	$(DWZ) \
 	  $(d_g95)/$(gcc_lexec_dir)/f951
 endif
 	dh_strip -p$(p_g95) \

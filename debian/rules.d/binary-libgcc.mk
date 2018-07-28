@@ -57,7 +57,7 @@ header_files = \
 		    avx512{bw,er,cd,dq,f,ifma,ifmavl,pf,vlbw,vbmi,vldq,vbmivl,vl}intrin.h \
 		    avx512{4fmaps,4vnniw,bitalg,vnni,vnnivl,vpopcntdq,vpopcntdqvl}intrin.h \
 		    avx512vbmi{2,2vl}intrin.h \
-		    {pconfig,vpclmulqdq,wbnoinvd}intrin.h \
+		    {movdir,pconfig,vpclmulqdq,wbnoinvd}intrin.h \
 		    {cet,clflushopt,clwb,clzero,gfni,pcommit,xsavec,xsaves}intrin.h \
 		    {arm_acle,unwind-arm-common,s390intrin}.h \
 		    amo.h msa.h \

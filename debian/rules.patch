@@ -13,6 +13,7 @@ series_file	?= $(patchdir)/series
 # which patches should be applied?
 
 debian_patches = \
+	svn-updates \
 	$(if $(with_linaro_branch),gcc-linaro) \
 	$(if $(with_linaro_branch),gcc-linaro-no-macros) \
 
@@ -73,6 +74,9 @@ debian_patches += \
 	gcc-alpha-bs-ignore \
 	libffi-riscv \
 	gcc-force-cross-layout \
+	gcc-search-prefixed-as-ld \
+	kfreebsd-decimal-float \
+ 	powerpcspe_remove_many \
 
 ifeq (,$(filter $(distrelease),trusty stretch jessie wheezy))
   debian_patches += gcc-as-needed-push-pop
@@ -130,6 +134,7 @@ ifeq ($(with_ada),yes)
 
   debian_patches += \
 	ada-gcc-name \
+	ada-verbose \
 
 	# FIXME: needs update
 	#ada-library-project-files-soname
@@ -198,8 +203,7 @@ ifeq ($(DEB_TARGET_ARCH),alpha)
 endif
 
 ifeq ($(DEB_TARGET_ARCH),powerpcspe)
-  debian_patches += powerpc_remove_many
-  debian_patches += powerpc_nofprs
+  debian_patches += powerpcspe_nofprs
 endif
 
 # all patches below this line are applied for gcc-snapshot builds as well

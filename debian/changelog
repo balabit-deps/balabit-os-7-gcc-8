@@ -1,3 +1,321 @@
+gcc-8 (8.2.0-1ubuntu2~18.04) bionic-proposed; urgency=medium
+
+  * SRU: LP: #1769657. Update the package to the current version in cosmic.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sat, 28 Jul 2018 08:13:41 +0200
+
+gcc-8 (8.2.0-1ubuntu2) cosmic; urgency=medium
+
+  * Update to SVN 20180727 (r263045) from the gcc-8-branch.
+    - Fix PR middle-end/86542, PR middle-end/86539, PR middle-end/86660,
+      PR middle-end/86627, PR target/86511.
+  * Update cross-build patches for GCC 8.2.
+  * Refresh patches.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sat, 28 Jul 2018 07:53:29 +0200
+
+gcc-8 (8.2.0-1ubuntu1) cosmic; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 26 Jul 2018 13:48:50 +0200
+
+gcc-8 (8.2.0-1) unstable; urgency=medium
+
+  * GCC 8.2.0 release.
+  * Update GDC to 20180726 from the gdc-8-stable branch..
+
+ -- Matthias Klose <doko@debian.org>  Thu, 26 Jul 2018 13:28:20 +0200
+
+gcc-8 (8.1.0-12ubuntu1) cosmic; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 19 Jul 2018 19:53:24 +0200
+
+gcc-8 (8.1.0-12) unstable; urgency=medium
+
+  * GCC 8.2.0 release candidate.
+  * Update to SVN 20180719 (r262861) from the gcc-8-branch.
+    - Fix PR middle-end/85602, PR c++/86480.
+
+  [ Nicolas Boulenguez ]
+  * ada-verbose patch: Make the ada build more verbose.
+  * Update the ada-gcc-name patch again. See #856274. Closes: #903694.
+
+  [ Matthias Klose ]
+  * Rewrite debian/README.cross.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 19 Jul 2018 17:39:39 +0200
+
+gcc-8 (8.1.0-11ubuntu1) cosmic; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 17 Jul 2018 12:32:11 +0200
+
+gcc-8 (8.1.0-11) unstable; urgency=medium
+
+  * Update to SVN 20180717 (r262818) from the gcc-8-branch.
+    - Fix PR c/86453, PR debug/86452, PR debug/86457, PR middle-end/85974,
+      PR middle-end/86076, PR tree-optimization/85935,
+      PR tree-optimization/86514, PR tree-optimization/86274,
+      PR target/84413 (x86), PR middle-end/86202, PR target/84829,
+      PR c++/3698, PR c++/86208, PR c++/86374, PR sanitizer/86406,
+      PR fortran/83184, PR fortran/86417, PR fortran/83183,
+      PR fortran/86325.
+
+  [ Nicolas Boulenguez ]
+  * Update the ada-gcc-name patch, not appending the suffix twice.
+    Addresses: #856274.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 17 Jul 2018 14:09:13 +0200
+
+gcc-8 (8.1.0-10ubuntu1) cosmic; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 12 Jul 2018 10:08:29 +0200
+
+gcc-8 (8.1.0-10) unstable; urgency=medium
+
+  * Update to SVN 20180712 (r262577) from the gcc-8-branch.
+    - Fix PR libstdc++/86272, PR libstdc++/86127, PR target/85904,
+      PR libstdc++/85098, PR libstdc++/85671, PR libstdc++/83982,
+      PR libstdc++/86292, PR libstdc++/86138, PR libstdc++/84087,
+      PR libstdc++/86398, PR hsa/86371, PR tree-optimization/86492,
+      PR c++/86400, PR target/86285 (PPC), PR debug/86064,
+      PR target/86222 (PPC), PR rtl-optimization/85645,
+      PR rtl-optimization/85645, PR target/86314 (x86), PR sanitizer/86406,
+      PR c++/86398, PR c++/86378, PR c++/86320, PR c++/80290,
+      PR fortran/82969, PR fortran/86242, PR fortran/82865.
+  * Enable decimal float support on kfreebsd-amd64. Closes: #897416.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 12 Jul 2018 10:07:17 +0200
+
+gcc-8 (8.1.0-9ubuntu1) cosmic; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 26 Jun 2018 13:03:48 +0200
+
+gcc-8 (8.1.0-9) unstable; urgency=medium
+
+  * Update to SVN 20180626 (r262138) from the gcc-8-branch.
+    - Fix PR libstdc++/86138, PR libstdc++/82644, PR libgcc/86213,
+      PR c++/86210, PR c/86093, PR target/86197 (PPC), PR target/85358 (PPC),
+      PR tree-optimization/85989, PR target/85657 (PPC), PR target/85657 (PPC),
+      PR target/85994, PR rtl-optimization/86108, PR debug/86194,
+      PR tree-optimization/86231, PR c/82063, PR c++/86219, PR c++/86182,
+      PR c++/85634, PR c++/86200, PR c++/81060, PR fortran/83118,
+      PR libstdc++/86112, PR libstdc++/81092, PR fortran/82972,
+      PR fortran/83088, PR fortran/85851, PR c++/86291.
+
+  [ Nicolas Boulenguez ]
+  * Remove Ludovic Brenta's work to let Ada build tools link with freshly
+    built libgnat.so, this is now handled by upstream testsuite.
+
+  [ Iain Buclaw ]
+  * gdc: Explicitly set test action as compile in all dg tests.
+
+  [ Matthias Klose ]
+  * Build using gnat-8.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 17 Jun 2018 12:56:15 +0200
+
+gcc-8 (8.1.0-8ubuntu1) cosmic; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sun, 17 Jun 2018 06:04:02 +0200
+
+gcc-8 (8.1.0-8) unstable; urgency=medium
+
+  * Update to SVN 20180617 (r261686) from the gcc-8-branch.
+    - Fix PR libstdc++/86169, PR middle-end/86095, PR middle-end/85878,
+      PR middle-end/86123, PR middle-end/86122, PR c++/86147, PR c++/82882,
+      PR fortran/85703, PR fortran/85702, PR fortran/85701.
+  * Fix applying the powerpcspe patches.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 17 Jun 2018 05:36:24 +0200
+
+gcc-8 (8.1.0-6) unstable; urgency=medium
+
+  * Update to SVN 20180614 (r261597) from the gcc-8-branch.
+    - Fix PR libstdc++/86008, PR libstdc++/85930, PR libstdc++/85951,
+      PR target/85591 (x86), PR c++/85710, PR c++/80485, PR target/85755 (PPC),
+      PR target/85755 (PPC), PR target/81497 (ARM), PR target/85684 (x86),
+      PR target/63177 (PPC), PR tree-optimization/86038,
+      PR tree-optimization/85964, PR tree-optimization/85934, PR c++/86025,
+      PR tree-optimization/85863, PR c/85623, PR target/86003 (ARM),
+      PR tree-optimization/85712, PR target/85950 (x86), PR target/85984,
+      PR target/85829 (x86), PR c++/85792, PR c++/85963, PR c++/61806,
+      PR c++/85765, PR c++/85764, PR c++/85807, PR c++/85815, PR c++/86094,
+      PR c++/86060, PR c++/85847, PR c++/85976, PR c++/85731, PR c++/85739,
+      PR c++/85761, PR c++/85873, PR fortran/44491, PR fortran/85138,
+      PR fortran/85996, PR fortran/86051, PR fortran/86059, PR fortran/63514,
+      PR fortran/78278, PR fortran/38351, PR fortran/78571, PR fortran/85631,
+      PR fortran/86045, PR fortran/85641, PR fortran/85816, PR fortran/85975,
+      PR libgfortran/85840, PR target/85945, PR middle-end/86139,
+      PR other/77609, PR tree-optimization/86114, PR target/86048 (x86),
+      PR fortran/86110.
+    - libgo: update to Go 1.10.3 release.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 14 Jun 2018 16:57:14 +0200
+
+gcc-8 (8.1.0-5ubuntu1) cosmic; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 31 May 2018 15:22:24 +0200
+
+gcc-8 (8.1.0-5) unstable; urgency=medium
+
+  * Update to SVN 20180531 (r260992) from the gcc-8-branch.
+    - Fix PR sanitizer/86012, PR c/85696, PR c++/85662, PR target/85756 (x86),
+      PR target/85683 (x86), PR c++/85952, PR c/85696, PR c++/85662.
+    - Fix libsanitizer build on sparc64.
+  * libgo: Make the vet tool work with gccgo (taken from the trunk).
+
+ -- Matthias Klose <doko@debian.org>  Thu, 31 May 2018 15:18:52 +0200
+
+gcc-8 (8.1.0-4) unstable; urgency=medium
+
+  * Update to SVN 20180529 (r260895) from the gcc-8-branch.
+    - Fix PR c++/85782, PR sanitizer/85835, PR libstdc++/85818,
+      PR libstdc++/85818, PR libstdc++/83891, PR libstdc++/84159,
+      PR libstdc++/67554, PR libstdc++/82966, PR bootstrap/85921,
+      PR sanitizer/85556, PR target/85900 (x86), PR target/85345 (x86),
+      PR c++/85912, PR target/85903 (x86), PR tree-optimization/85793,
+      PR middle-end/85874, PR tree-optimization/85822, PR middle-end/85643,
+      PR tree-optimization/85814, PR target/85698 (PPC), PR c++/85842,
+      PR c++/85864, PR c++/81420, PR c++/85866, PR c++/85782, PR fortran/85786,
+      PR fortran/85895, PR fortran/85780, PR fortran/85779, PR fortran/85543,
+      PR fortran/80657, PR fortran/49636, PR fortran/82275, PR fortran/82923,
+      PR fortran/66694, PR fortran/82617, PR fortran/85742, PR fortran/85542,
+      PR libgfortran/85906, PR libgfortran/85840.
+
+  [ Nicolas Boulenguez ]
+  * Update ada/confirm_debian_bugs to gcc-8 and python3.
+
+  [ Matthias Klose ]
+  * gnat-*: Don't search the target dirs when calling dh_shlibdeps.
+  * Stop shipping unstripped binaries with the final release. Closes: #894014.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 29 May 2018 14:34:37 +0200
+
+gcc-8 (8.1.0-3ubuntu2) cosmic; urgency=medium
+
+  * Update to SVN 20180514 (r260228) from the gcc-8-branch.
+    - Fix PR fortran/85742, PR fortran/85542.
+  * gnat-*: Don't search the target dirs when calling dh_shlibdeps.
+
+ -- Matthias Klose <doko@ubuntu.com>  Mon, 14 May 2018 11:25:01 -0400
+
+gcc-8 (8.1.0-3ubuntu1) cosmic; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sat, 12 May 2018 10:51:15 -0400
+
+gcc-8 (8.1.0-3) unstable; urgency=medium
+
+  * Update to SVN 20180512 (r260194) from the gcc-8-branch.
+    - Fix PR ipa/85655, PR target/85733 (ARM), PR target/85606 (ARM),
+      PR fortran/70870, PR fortran/85521, PR fortran/85687, PR fortran/68846,
+      PR fortran/70864.
+  * Fix name of the g++ multiarch include directory. Closes: #898323.
+  * Fix PR sanitizer/85556, attribute no_sanitize does not accept multiple
+    options; taken from the trunk. Closes: #891489.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 12 May 2018 10:36:05 -0400
+
+gcc-8 (8.1.0-2ubuntu1) cosmic; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 10 May 2018 21:09:35 -0400
+
+gcc-8 (8.1.0-2) unstable; urgency=medium
+
+  * Update to SVN 20180510 (r260147) from the gcc-8-branch.
+    - Fix PR go/85630, PR target/85519 (nvptx), PR libstdc++/85642,
+      PR libstdc++/84769, PR libstdc++/85632, PR libstdc++/80506,
+      PR target/85512 (AArch64), PR c++/85305, PR ada/85635, PR ada/85540,
+      PR rtl-optimization/85638, PR middle-end/85588, PR middle-end/85588,
+      PR tree-optimization/85615, PR middle-end/85567, PR target/85658 (ARM),
+      PR tree-optimization/85597, PR middle-end/85627, PR c++/85659,
+      PR c++/85706, PR c++/85695, PR c++/85646, PR c++/85618, PR fortran/85507.
+  * Don't configure with --with-as and --with-ld, but search the triplet
+    prefixed as and ld in the same places as as/ld. Closes: #896057, #897896.
+  * Enable decimal float support on kfreebsd-amd64. Closes: #897416.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 10 May 2018 20:43:42 -0400
+
+gcc-8 (8.1.0-1ubuntu3) cosmic; urgency=medium
+
+  * Update to SVN 20180506 (r253978) from the gcc-7-branch.
+    - Fix PR go/85630, PR target/85519 (nvptx), PR libstdc++/85642,
+      PR libstdc++/84769, PR libstdc++/85632, PR target/85512 (AArch64),
+      PR c++/85305, PR ada/85635, PR ada/85540.
+  * Don't configure with --with-as and --with-ld, but search the triplet
+    prefixed as and ld in the same places as as/ld. Closes: #896057, #897896.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sun, 06 May 2018 14:41:38 +0200
+
+gcc-8 (8.1.0-1ubuntu2) cosmic; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 03 May 2018 16:02:58 +0200
+
+gcc-8 (8.1.0-1) unstable; urgency=medium
+
+  * GCC 8.1.0 release.
+  * Stop providing the 8.x.y symlinks in gcc_lib_dir and incluce/c++.
+  * Configure powerpcspe with --enable-obsolete, will be gone with GCC 9.
+  * Build libmpx libraries when not building the common libs.
+  * Update NEWS files for GCC 8.1.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 02 May 2018 11:43:46 +0200
+
+gcc-8 (8-20180425-1ubuntu1) bionic; urgency=medium
+
+  * GCC 8 snapshot, taken from the trunk 20180425 (r259628).
+
+ -- Matthias Klose <doko@ubuntu.com>  Wed, 25 Apr 2018 07:36:57 +0200
+
+gcc-8 (8-20180425-1) unstable; urgency=medium
+
+  * GCC 8 snapshot, taken from the trunk 20180425 (r259628).
+
+  [ Matthias Klose ]
+  * Update nvptx-newlib to 20180424.
+  * Use the binutils in the build chroot if present.
+  * Don't use dwz for GCC backports.
+  * Install the movdirintrin.h header file.
+
+  [ Aurelien Jarno ]
+  * Enable logwatch on riscv64.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 25 Apr 2018 06:56:58 +0200
+
+gcc-8 (8-20180423-0ubuntu1) bionic; urgency=medium
+
+  * GCC 8 snapshot, taken from the trunk 20180423 (r259558).
+
+ -- Matthias Klose <doko@ubuntu.com>  Mon, 23 Apr 2018 13:17:46 +0200
+
 gcc-8 (8-20180414-1ubuntu2) bionic; urgency=medium
 
   * Run the testsuite during the build.

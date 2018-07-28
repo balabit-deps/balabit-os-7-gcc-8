@@ -183,7 +183,7 @@ endif
 
 	debian/dh_rmemptydirs -p$(p_gcc)
 ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTONS)))
-	dwz \
+	$(DWZ) \
 	  $(d_gcc)/$(gcc_lexec_dir)/lto1 \
 	  $(d_gcc)/$(gcc_lexec_dir)/lto-wrapper \
 	  $(d_gcc)/$(gcc_lexec_dir)/collect2

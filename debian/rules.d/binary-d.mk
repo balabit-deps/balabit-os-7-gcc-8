@@ -130,7 +130,7 @@ endif
 		/$(docdir)/$(p_gdc)/README.Bugs
 
 ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTONS)))
-	dwz \
+	$(DWZ) \
 	  $(d_gdc)/$(gcc_lexec_dir)/cc1d
 endif
 	dh_strip -p$(p_gdc) \

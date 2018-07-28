@@ -1226,10 +1226,8 @@ ifneq (,$(filter $(DEB_TARGET_ARCH),$(mpx_archs)))
   # requires newer binutils, or else libmpxwrappers isn't built
   ifeq (,$(filter $(distrelease),squeeze lucid precise))
     with_mpx := yes
-    ifeq ($(with_common_libs),yes)
     ifneq (,$(findstring gcc-, $(PKGSOURCE)))
       with_libmpx := yes
-    endif
     endif
   endif
 endif

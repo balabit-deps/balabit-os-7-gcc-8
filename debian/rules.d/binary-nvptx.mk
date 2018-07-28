@@ -54,7 +54,7 @@ endif
 	debian/dh_rmemptydirs -p$(p_nvptx)
 
 ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTONS)))
-	dwz \
+	$(DWZ) \
 	  $(d_nvptx)/$(gcc_lexec_dir)/accel/nvptx-none/{collect2,lto1,lto-wrapper,mkoffload}
 endif
 	dh_strip -p$(p_nvptx) \

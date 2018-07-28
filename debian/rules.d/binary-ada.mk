@@ -294,15 +294,12 @@ endif
 	debian/dh_rmemptydirs -p$(p_gnat)
 
 ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTONS)))
-	dwz \
+	$(DWZ) \
 	  $(d_gnat)/$(gcc_lexec_dir)/gnat1
 endif
 	dh_strip -p$(p_gnat)
 	find $(d_gnat) -name '*.ali' | xargs chmod 444
-	$(cross_shlibdeps) dh_shlibdeps -p$(p_gnat) \
-		$(call shlibdirs_to_search, \
-			$(p_lgcc) $(p_lgnat) $(p_lgnatvsn) \
-		,)
+	dh_shlibdeps -p$(p_gnat)
 	mkdir -p $(d_gnat)/usr/share/lintian/overrides
 	echo '$(p_gnat) binary: hardening-no-pie' \
 	  > $(d_gnat)/usr/share/lintian/overrides/$(p_gnat)
@@ -316,7 +313,7 @@ endif
 ifeq ($(with_gnatsjlj),yes)
 	dh_strip -p$(p_gnatsjlj)
 	find $(d_gnatsjlj) -name '*.ali' | xargs chmod 444
-	$(cross_makeshlibs) dh_shlibdeps -p$(p_gnatsjlj)
+	dh_shlibdeps -p$(p_gnatsjlj)
 	echo $(p_gnatsjlj) >> debian/arch_binaries
 endif
 

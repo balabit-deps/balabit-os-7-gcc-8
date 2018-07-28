@@ -35,7 +35,7 @@ Index: b/src/gcc/ada/link.c
 --- a/src/gcc/ada/link.c
 +++ b/src/gcc/ada/link.c
 @@ -107,9 +107,9 @@ const char *__gnat_default_libgcc_subdir
-    || defined (__NetBSD__) || defined (__OpenBSD__)
+    || defined (__NetBSD__) || defined (__OpenBSD__) \
     || defined (__QNX__)
  const char *__gnat_object_file_option = "-Wl,@";
 -const char *__gnat_run_path_option = "-Wl,-rpath,";

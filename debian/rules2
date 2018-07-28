@@ -18,6 +18,11 @@ IR	= install -m 644	# Install regular file
 IP	= install -m 755	# Install program
 IS	= install -m 755	# Install script
 
+DWZ	= dwz
+ifneq (,$(filter $(distrelease),jessie stretch trusty xenial))
+  DWZ	= : dwz
+endif
+
 # kernel-specific ulimit hack
 ifeq ($(findstring linux,$(DEB_HOST_GNU_SYSTEM)),linux)
   ULIMIT_M =  if [ -e /proc/meminfo ]; then \
@@ -177,6 +182,12 @@ flags_to_pass := CFLAGS CXXFLAGS LIBCFLAGS LIBCXXFLAGS LDFLAGS
 
 docdir		= usr/share/doc
 
+# no prefix for regular builds, would disable searching for as / ld
+binutils_prefix =
+ifneq (,$(with_build_sysroot))
+  binutils_prefix = $(with_build_sysroot)/usr/bin
+endif
+
 CONFARGS = -v \
 	--with-pkgversion='$(distribution)$(if $(with_linaro_branch),/Linaro)$(if $(with_ibm_branch),/IBM)___$(DEB_VERSION)' \
 	--with-bugurl='file:///usr/share/doc/$(PKGSOURCE)/README.Bugs'
@@ -185,8 +196,12 @@ CONFARGS += \
 	--enable-languages=$(subst $(SPACE),$(COMMA),$(enabled_languages)) \
 	--prefix=/$(PF) \
 	--with-gcc-major-version-only \
-	--with-as=/usr/bin/$(DEB_TARGET_GNU_TYPE)-as \
-	--with-ld=/usr/bin/$(DEB_TARGET_GNU_TYPE)-ld
+
+ifneq (,$(with_build_sysroot))
+  CONFARGS += \
+	--with-as=$(binutils_prefix)/$(DEB_TARGET_GNU_TYPE)-as \
+	--with-ld=$(binutils_prefix)/$(DEB_TARGET_GNU_TYPE)-ld
+endif
 
 ifeq ($(versioned_packages),yes)
   CONFARGS += --program-suffix=-$(BASE_VERSION)
@@ -426,6 +441,7 @@ endif
 
 ifeq ($(findstring powerpcspe,$(DEB_TARGET_ARCH)),powerpcspe)
   CONFARGS += --with-cpu=8548 --enable-e500_double
+  CONFARGS += --enable-obsolete
 endif
 
 ifneq (,$(findstring softfloat,$(DEB_TARGET_GNU_CPU)))
@@ -1551,7 +1567,7 @@ $(stampdir)/05-build-html-nosplit: $(build_stamp)
 	touch $@
 
 # start the script only on architectures known to have slow autobuilders ...
-logwatch_archs := alpha arm m68k mips mipsel mips64el sparc
+logwatch_archs := alpha arm m68k mips mipsel mips64el riscv64 sparc
 ifeq ($(DEB_HOST_GNU_CPU), $(findstring $(DEB_HOST_GNU_CPU),$(logwatch_archs)))
   start_logwatch = yes
 endif

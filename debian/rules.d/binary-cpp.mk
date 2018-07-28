@@ -53,7 +53,7 @@ endif
 	debian/dh_rmemptydirs -p$(p_cpp)
 
 ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTONS)))
-	dwz $(d_cpp)/$(gcc_lexec_dir)/cc1
+	$(DWZ) $(d_cpp)/$(gcc_lexec_dir)/cc1
 endif
 	dh_strip -p$(p_cpp) \
 	  $(if $(unstripped_exe),-X/cc1)

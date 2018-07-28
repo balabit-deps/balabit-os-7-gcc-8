@@ -287,7 +287,7 @@ endif
 	debian/dh_rmemptydirs -p$(p_go)
 
 ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTONS)))
-	dwz \
+	$(DWZ) \
 	  $(d_go)/$(gcc_lexec_dir)/go1
 endif
 	dh_strip -v -p$(p_go) -X/cgo -X/go$(pkg_ver) -X/gofmt$(pkg_ver) \

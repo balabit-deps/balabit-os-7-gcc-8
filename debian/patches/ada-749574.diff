@@ -23,7 +23,7 @@ Index: b/src/gcc/ada/gnatlink.adb
 ===================================================================
 --- a/src/gcc/ada/gnatlink.adb
 +++ b/src/gcc/ada/gnatlink.adb
-@@ -239,6 +239,9 @@ procedure Gnatlink is
+@@ -238,6 +238,9 @@ procedure Gnatlink is
     procedure Write_Usage;
     --  Show user the program options
  
@@ -33,7 +33,7 @@ Index: b/src/gcc/ada/gnatlink.adb
     ---------------
     -- Base_Name --
     ---------------
-@@ -495,7 +498,7 @@ procedure Gnatlink is
+@@ -494,7 +497,7 @@ procedure Gnatlink is
                    Binder_Options.Table (Binder_Options.Last) :=
                      Linker_Options.Table (Linker_Options.Last);
  
@@ -42,7 +42,7 @@ Index: b/src/gcc/ada/gnatlink.adb
                    if Arg'Length = 7 then
                       Exit_With_Error ("Missing argument for --LINK=");
                    end if;
-@@ -529,7 +532,7 @@ procedure Gnatlink is
+@@ -528,7 +531,7 @@ procedure Gnatlink is
                       end loop;
                    end;
  
@@ -51,7 +51,7 @@ Index: b/src/gcc/ada/gnatlink.adb
                    if Arg'Length = 6 then
                       Exit_With_Error ("Missing argument for --GCC=");
                    end if;
-@@ -1254,13 +1257,9 @@ procedure Gnatlink is
+@@ -1253,13 +1256,9 @@ procedure Gnatlink is
                                           1 .. Linker_Options.Last
                                         loop
                                            if Linker_Options.Table (J) /= null
@@ -68,7 +68,7 @@ Index: b/src/gcc/ada/gnatlink.adb
                                            then
                                               --  We have found an already
                                               --  specified run_path_option:
-@@ -1377,6 +1376,17 @@ procedure Gnatlink is
+@@ -1376,6 +1375,17 @@ procedure Gnatlink is
        Status := fclose (Fd);
     end Process_Binder_File;
  
@@ -86,7 +86,7 @@ Index: b/src/gcc/ada/gnatlink.adb
     -----------
     -- Usage --
     -----------
-@@ -1890,8 +1900,8 @@ begin
+@@ -1888,8 +1898,8 @@ begin
           while J <= Linker_Options.Last loop
              if Linker_Options.Table (J).all = "-Xlinker"
                and then J < Linker_Options.Last
@@ -97,7 +97,7 @@ Index: b/src/gcc/ada/gnatlink.adb
              then
                 if Stack_Op then
                    Linker_Options.Table (J .. Linker_Options.Last - 2) :=
-@@ -1922,13 +1932,9 @@ begin
+@@ -1920,13 +1930,9 @@ begin
              --  Here we just check for a canonical form that matches the
              --  pragma Linker_Options set in the NT runtime.
  

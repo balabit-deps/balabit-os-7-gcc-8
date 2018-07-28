@@ -74,6 +74,7 @@ gfdl_texinfo_files = \
 	gcc/doc/options.texi \
 	gcc/doc/passes.texi \
 	gcc/doc/plugins.texi \
+	gcc/doc/poly-int.texi \
 	gcc/doc/portability.texi \
 	gcc/doc/rtl.texi \
 	gcc/doc/service.texi \
