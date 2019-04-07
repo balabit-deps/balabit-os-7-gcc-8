@@ -1,3 +1,589 @@
+gcc-8 (8.3.0-6ubuntu1~18.04) bionic-proposed; urgency=medium
+
+  * SRU: LP: #1814369.
+  * Update to the GCC 8.3.0 release.
+  * Don't build from the ARM/Linaro branch on armhf/arm64.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sun, 07 Apr 2019 03:20:36 +0200
+
+gcc-8 (8.3.0-6ubuntu1) disco; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+    - Don't built common libraries now build from GCC 9.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sat, 06 Apr 2019 17:04:43 +0200
+
+gcc-8 (8.3.0-6) unstable; urgency=medium
+
+  * Update to SVN 20190406 (r270182) from the gcc-8-branch.
+    - Fix PR middle-end/89934, PR lto/89896.
+  * Fix PR fortran/89981, taken from the trunk.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 06 Apr 2019 16:44:55 +0200
+
+gcc-8 (8.3.0-5ubuntu1) disco; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+    - Don't built common libraries now build from GCC 9.
+
+ -- Matthias Klose <doko@ubuntu.com>  Wed, 03 Apr 2019 03:09:43 +0200
+
+gcc-8 (8.3.0-5) unstable; urgency=medium
+
+  * Update to SVN 20190403 (r270110) from the gcc-8-branch.
+    - Fix PR target/89902 (x86), PR target/89903 (x86),
+      PR rtl-optimization/89862, PR target/89848 (x86), PR web/87829,
+      PR target/89827 (x86), PR fortran/83515, PR fortran/85797,
+      PR fortran/78865.
+  * Revert the fix for PC c++/88419, causing PR c++/89906. Closes: #926234.
+  * Mark gcc-8-source as M-A: foreign.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 03 Apr 2019 03:05:37 +0200
+
+gcc-8 (8.3.0-4ubuntu1) disco; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+    - Don't built common libraries now build from GCC 9.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 26 Mar 2019 12:54:56 +0100
+
+gcc-8 (8.3.0-4) unstable; urgency=medium
+
+  * Update to SVN 20190326 (r269936) from the gcc-8-branch.
+    - Fix PR tree-optimization/89546, PR target/89523 (x86), PR fortran/84394,
+      PR fortran/66089, PR fortran/66695, PR fortran/77746, PR fortran/79485,
+      PR libgcc/60790, PR target/89775 (S390), PR debug/88389,
+      PR rtl-optimization/89753, PR middle-end/88273, PR fortran/71861,
+      PR fortran/68009.
+  * gcc-8-base: Breaks gnat-6 (<< 6.4) to ease upgrades. Closes: #924911.
+  * Fix cross building gdc (Helmut Grohne). Closes: #925040.
+  * Fix package descriptions for cross packages.
+  * Fix PR jit/87808: Don't rely on the gcc driver. Let libgccjit0
+    depend on binutils and libgcc-dev. Closes: #911668.
+  * Fix stripping the gcc-hppa64 package.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 26 Mar 2019 11:56:40 +0100
+
+gcc-8 (8.3.0-3ubuntu1) disco; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+    - Don't built common libraries now build from GCC 9.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sat, 16 Mar 2019 11:58:24 +0100
+
+gcc-8 (8.3.0-3) unstable; urgency=medium
+
+  * Update to SVN 20190316 (r269720) from the gcc-8-branch.
+    - Fix PR tree-optimization/89505, PR target/89517 (AArch64),
+      PR bootstrap/89539, PR debug/88878, PR debug/89514,
+      PR tree-optimization/89536, PR target/88100 (PPC), PR target/89397 (x86),
+      PR target/89361 (S390), PR c++/89212, PR fortran/89077,
+      PR fortran/77583, PR fortran/89174, PR fortran/87689, PR fortran/84387,
+      PR fortran/89516, PR fortran/89492, PR fortran/89266, PR fortran/88326,
+      PR libfortran/89020, PR target/88530 (AArch64), PR target/88530 (AArch64),
+      PR ipa/88235, PR c++/88820, PR c++/88869, PR c++/88419, PR c++/88690,
+      PR c++/87921, PR c++/89381, PR c++/89576, PR c++/89422, PR c++/87513,
+      PR c++/88183, PR c++/89585, PR fortran/71544, PR fortran/87734,
+      PR fortran/71203, PR fortran/72714, PR middle-end/89572, PR target/85860,
+      PR middle-end/89677, PR middle-end/89497, PR tree-optimization/89296,
+      PR tree-optimization/89664, PR rtl-optimization/89588, PR lto/88147,
+      PR target/86952 (x86), PR lto/88147, PR fortran/87673, PR c++/89383,
+      PR lto/87525, PR other/89712, PR testsuite/85368.
+  * Backport libgo patches for the Hurd from the trunk (Svante Signell).
+  * Add some more breaks to libstdc++6. Closes: #866354.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 16 Mar 2019 11:41:45 +0100
+
+gcc-8 (8.3.0-2ubuntu2) disco; urgency=medium
+
+  * Update to SVN 20190306 (r269421) from the gcc-8-branch.
+    - Fix PR tree-optimization/89505, PR target/89517 (AArch64),
+      PR bootstrap/89539, PR debug/88878, PR debug/89514,
+      PR tree-optimization/89536, PR target/88100 (PPC), PR target/89397 (x86),
+      PR target/89361 (S390), PR c++/89212, PR fortran/89077,
+      PR fortran/77583, PR fortran/89174, PR fortran/87689, PR fortran/84387,
+      PR fortran/89516, PR fortran/89492, PR fortran/89266, PR fortran/88326,
+      PR libfortran/89020, PR target/88530 (AArch64), PR target/88530 (AArch64).
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 26 Feb 2019 09:31:52 +0100
+
+gcc-8 (8.3.0-2ubuntu1) disco; urgency=medium
+
+  * GCC 8.3.0 release.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 26 Feb 2019 09:31:52 +0100
+
+gcc-8 (8.3.0-2) unstable; urgency=medium
+
+  * Fix the nvptx build.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 26 Feb 2019 09:26:57 +0100
+
+gcc-8 (8.3.0-1) unstable; urgency=medium
+
+  * GCC 8.3.0 release.
+  * Update newlib to newlib-3.1.0.20181231.
+  * Refresh patches.
+  * Fix PR middle-end/89412, patch taken from the trunk. Closes: #922683.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 25 Feb 2019 09:03:00 +0100
+
+gcc-8 (8.2.0-21ubuntu1) disco; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+    - Don't built common libraries now build from GCC 9.
+
+ -- Matthias Klose <doko@ubuntu.com>  Fri, 15 Feb 2019 14:38:29 +0100
+
+gcc-8 (8.2.0-21) unstable; urgency=medium
+
+  * GCC 8.3.0 release candidate.
+  * Update to SVN 20190215 (r268938) from the gcc-8-branch.
+    - Fix PR middle-end/89303, PR lto/88858, PR ipa/89009,
+      PR tree-optimization/89314, PR middle-end/89281, PR target/89290 (x86),
+      PR middle-end/89246, PR tree-optimization/86554, PR lto/89260,
+      PR tree-optimization/89253, PR middle-end/89223, PR c++/89267,
+      PR tree-optimization/88739, PR target/88648 (ARM), PR target/89112 (PPC),
+      PR fortran/89077, PR fortran/71237, PR tree-optimization/89278,
+      PR other/89342, PR c++/88795, PR rtl-optimization/89354,
+      PR target/86684 (PPC), PR target/87149 (PPC), PR target/88892 (PPC),
+      PR rtl-optimization/85805, PR rtl-optimization/89242.
+  * Build-depend on locales-all instead of locales, don't generate locales
+    during the build, and attribute test dependencies with <!nocheck>.
+  * Remove the linaro-macros test for Linaro builds.
+  * gdc-8: Include again the libgphobos spec file, accidentally dropped in -18.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 15 Feb 2019 14:31:06 +0100
+
+gcc-8 (8.2.0-20ubuntu1) disco; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+    - Don't built common libraries now build from GCC 9.
+  * Remove the linaro-macros test for Linaro builds.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sat, 09 Feb 2019 18:01:31 +0100
+
+gcc-8 (8.2.0-20) unstable; urgency=medium
+
+  * Update to SVN 20190209 (r268721) from the gcc-8-branch.
+    - Fix PR libstdc++/88066, PR libstdc++/87787, PR libstdc++/65229,
+      PR libstdc++/87308, PR libstdc++/89128, PR libstdc++/88119,
+      PR libstdc++/83511, PR libstdc++/88084, PR libstdc++/86910,
+      PR libstdc++/87846, PR libstdc++/86595, PR libstdc++/89117,
+      PR target/88861, PR rtl-optimization/89234, PR target/88343 (PPC),
+      PR tree-optimization/86991, PR debug/87295, PR debug/87295, PR lto/86736,
+      PR lto/87187, PR debug/88046, PR lto/87229, PR lto/88112,
+      PR target/85596, PR tree-optimization/88427, PR tree-optimization/88217,
+      PR tree-optimization/88149, PR c++/88761, PR c++/88752, PR c++/86943.
+    - Undo reverting the fix for PR c++/86610.
+  * Update the gcc-linaro-doc patch.
+  * Fix the libphobos multilib cross builds.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 09 Feb 2019 17:58:52 +0100
+
+gcc-8 (8.2.0-19ubuntu1) disco; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+    - Don't built common libraries now build from GCC 9.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 07 Feb 2019 22:04:19 +0100
+
+gcc-8 (8.2.0-18) unstable; urgency=medium
+
+  * Update to SVN 20190207 (r268611) from the gcc-8-branch.
+    - Fix PR target/88856 (S390X). Addresses: #915738. LP: #1815057.
+    - Fix PR target/87064 (PPC), PR c++/89083, c++/80864, PR fortran/67679,
+      PR tree-optimization/88105, PR tree-optimization/88223,
+      PR middle-end/88448, PR middle-end/88415, PR tree-optimization/88030,
+      PR tree-optimization/87929, PR tree-optimization/89135,
+      PR tree-optimization/88903, PR c++/89158, PR c++/88983, PR c++/89119,
+      PR c++/89024, PR c++/88988, PR middle-end/89002, PR middle-end/88968,
+      PR c/89211, PR target/89188, PR rtl-optimization/89195, PR target/89186,
+      PR middle-end/87887, PR tree-optimization/88107, PR sanitizer/89124,
+      PR c++/89105, PR c++/66676, PR ipa/89104, PR middle-end/89002,
+      PR target/89073, PR target/87214, PR tree-optimization/88964,
+      PR tree-optimization/88964, PR target/88965, PR target/88905,
+      PR rtl-optimization/49429, PR target/49454, PR rtl-optimization/86334,
+      PR target/88906, PR target/88734, PR rtl-optimization/88870,
+      PR bootstrap/88714, PR c/88568, PR debug/88723, PR debug/88635,
+      PR c++/89187, PR c++/88988, PR c++/88976, PR c++/88949,
+      PR sanitizer/88901, PR fortran/83246, PR fortran/89084,
+      PR fortran/88902.
+  * Update the support to build without packages being built by GCC 9.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 07 Feb 2019 21:56:01 +0100
+
+gcc-8 (8.2.0-17ubuntu6) disco; urgency=medium
+
+  * Stop building packages now built from GCC 9.
+  * Build using the ARM/Linaro branch on armhf and arm64.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 05 Feb 2019 21:57:33 +0100
+
+gcc-8 (8.2.0-17) unstable; urgency=medium
+
+  * Update to SVN 20190204 (r268512) from the gcc-8-branch.
+    - Fix PR rtl-optimization/89115 (compile time part). Addresses: #918329.
+    - Fix PR tree-optimization/89008, PR tree-optimization/87022,
+      PR tree-optimization/88932, PR fortran/88393, PR fortran/88980,
+      PR fortran/88685, PR fortran/88298, PR fortran/57048, PR libfortran/88678.
+  * Backport libffi RISC-V go closures. Closes: #920939.
+  * Add support to build from the gcc-8 ARM/Linaro branch.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 04 Feb 2019 14:58:52 +0100
+
+gcc-8 (8.2.0-16ubuntu1) disco; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Wed, 30 Jan 2019 18:25:55 +0100
+
+gcc-8 (8.2.0-16) unstable; urgency=medium
+
+  * Update to SVN 20190130 (r268398) from the gcc-8-branch.
+    - Fix PR tree-optimization/86865, PR tree-optimization/86865,
+      PR target/88948, PR c++/86740, PR c++/87075, 
+      PR fortran/56386, PR fortran/58906, PR fortran/77385, PR fortran/80260,
+      PR fortran/82077, PR fortran/87336.
+  * Revert the fix for PR c++/86610, causing PR c++/88995. Closes: #920821.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 30 Jan 2019 18:21:01 +0100
+
+gcc-8 (8.2.0-15ubuntu1) disco; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Fri, 25 Jan 2019 09:43:23 +0100
+
+gcc-8 (8.2.0-15) unstable; urgency=medium
+
+  * Update to SVN 20190125 (r268257) from the gcc-8-branch.
+    - Fix PR libstdc++/80762, PR libstdc++/80762, PR libstdc++/87855,
+      PR libstdc++/87514, PR libstdc++/87520, PR libstdc++/88782,
+      PR libstdc++/87855, PR c/88720, PR c/88726, PR ipa/88214,
+      PR ipa/85574, PR tree-optimization/85574, PR target/84010 (SPARC),
+      PR target/88938 (x86), PR target/88799 (ARM), PR tree-optimization/89008,
+      PR c++/86610, PR fortran/81849, PR fortran/88803, PR fortran/35031,
+      PR libfortran/88776, PR target/88998 (x86), PR target/88469 (ARM).
+  * Turn on profiled bootstrap on x86, ARM32, AArch64, PPC64 and s390x
+    architectures for native builds.
+  * Relax the shlibs dependency for libgnat-8. Closes: #920246.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 25 Jan 2019 09:36:26 +0100
+
+gcc-8 (8.2.0-14ubuntu1) disco; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 08 Jan 2019 13:10:57 +0100
+
+gcc-8 (8.2.0-14) unstable; urgency=medium
+
+  * Update to SVN 20190108 (r267721) from the gcc-8-branch.
+    - Fix PR fortran/88463, PR libstdc++/64883, PR c++/88215,
+      PR sanitizer/88426, PR inline-asm/55681, PR middle-end/82564,
+      PR target/88620, PR target/88594 (x86), PR debug/88644,
+      PR middle-end/85594, PR middle-end/88553, PR target/88522 (x86),
+      PR rtl-optimization/88563, PR target/88541 (x86), PR c++/82294,
+      PR c++/87436, PR rtl-optimization/88470, PR rtl-optimization/88416,
+      PR target/85593, PR target/87598 (AArch64), PR tree-optimization/87360,
+      PR target/88234 (PPC), PR c++/86900, PR target/85644 (x86),
+      PR target/86832 (x86), PR tree-optimization/87895,
+      PR tree-optimization/88071, PR debug/87039, PR rtl-optimization/87475,
+      PR rtl-optimization/88018, PR tree-optimization/87898, PR lto/88130,
+      PR lto/86517, PR lto/88185, PR inline-asm/55681, PR ipa/88561,
+      PR c++/87380, PR target/88418 (x86), PR target/88213 (PPC),
+      PR c++/88180, PR c++/87934, PR c++/88410, PR c++/82294, PR c++/87436,
+      PR c++/86669, PR c++/87506, PR c++/88103, PR c++/88181, PR c++/88122,
+      PR inline-asm/55681, PR fortran/88463, PR fortran/88377,
+      PR fortran/77703, PR fortran/77325, PR fortran/85798, PR fortran/85544,
+      PR fortran/88169, PR fortran/87359.
+  * Bump standards version.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 08 Jan 2019 12:43:13 +0100
+
+gcc-8 (8.2.0-13ubuntu1) disco; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 18 Dec 2018 07:29:34 +0100
+
+gcc-8 (8.2.0-13) unstable; urgency=medium
+
+  * Update to SVN 20181218 (r267225) from the gcc-8-branch.
+    - Fix PR target/87853, PR target/87496 (PPC), PR c++/87531,
+      PR fortran/88155, PR fortran/88249, PR fortran/87922, PR fortran/88269,
+      PR fortran/88205, PR fortran/88206, PR fortran/88228, PR fortran/88138,
+      PR fortran/88116, PR fortran/88467, PR target/88224 (ARM),
+      PR rtl-optimization/88001, PR rtl-optimization/88253.
+  * gcc-8-source: Depend on lsb-release.
+  * Disable broken selective scheduling on ia64 (Adrian Glaubitz).
+    See PR rtl-optimization/85412. Closes: #916591.
+  * Fix PR sanitizer/88426, taken from the trunk. Closes: #916388.
+  * Fix perl shebang for the gnathtml binary.
+  * Lower priority of libgcc[124] and libstdc++6 packages.
+  * Don't add the libstdc++6 breaks for releases newer than stretch.
+  * libgccjit-doc: Install image files.
+  * Stop building gnat on powerpcspe. Closes: #912649.
+  * Don't provide <frontend>-compiler names for cross compiler packages.
+    Addresses: #916376.  Not a final solution.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 18 Dec 2018 07:25:34 +0100
+
+gcc-8 (8.2.0-12ubuntu2) disco; urgency=medium
+
+  * Update to SVN 20181215 (r267180) from the gcc-8-branch.
+    - Fix PR target/87853, PR target/87496 (PPC), PR c++/87531,
+      PR fortran/88155, PR fortran/88249, PR fortran/87922, PR fortran/88269,
+      PR fortran/88205, PR fortran/88206, PR fortran/88228, PR fortran/88138,
+      PR rtl-optimization/88001, PR target/88224 (ARM).
+  * gcc-8-source: Depend on lsb-release.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sun, 16 Dec 2018 01:32:49 +0100
+
+gcc-8 (8.2.0-12ubuntu1) disco; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sun, 09 Dec 2018 11:08:44 +0100
+
+gcc-8 (8.2.0-12) unstable; urgency=medium
+
+  * Update to SVN 20181209 (r266918) from the gcc-8-branch.
+    - Fix PR fortran/88048, PR fortran/88025.
+  * Back-out the fix for PR c++/87531. Closes: #915980.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 09 Dec 2018 11:02:40 +0100
+
+gcc-8 (8.2.0-11ubuntu1) disco; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Fri, 07 Dec 2018 00:15:55 +0100
+
+gcc-8 (8.2.0-11) unstable; urgency=medium
+
+  * Update to SVN 20181206 (r266855) from the gcc-8-branch.
+    - Fix PR libstdc++/70694, PR libstdc++/88199, PR tree-optimization/87288,
+      PR target/81685, PR target/87496 (PPC), PR tree-optimization/79351,
+      PR tree-optimization/88229, PR target/84711 (ARM), PR c++/88120,
+      PR c++/87531, PR fortran/88073, PR fortran/88143, PR libfortran/88137,
+      PR libfortran/88137.
+  * Back-out the gcc-search-prefixed-as-ld patch. See #915194.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 07 Dec 2018 00:06:23 +0100
+
+gcc-8 (8.2.0-10ubuntu1) disco; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Fri, 23 Nov 2018 09:52:25 +0100
+
+gcc-8 (8.2.0-10) unstable; urgency=medium
+
+  * Update to SVN 20181123 (r266402) from the gcc-8-branch.
+    - Fix PR libstdc++/87822, PR libstdc++/87809, PR rtl-optimization/85925,
+      PR gcov-profile/88045, PR target/87928 (x86), PR debug/88006,
+      PR debug/87462, PR target/85968 (ARC), PR middle-end/58372,
+      PR target/87867 (ARM), PR tree-optimization/87859, PR sanitizer/87837,
+      PR middle-end/87647, PR middle-end/85488, PR middle-end/87649,
+      PR c++/86246, PR c++/87989, PR c++/86288, PR fortran/87725,
+      PR fortran/87597, PR lto/88077, PR libfortran/78351,
+      PR libstdc++/85930, PR libstdc++/87520, PR target/88051 (x86).
+
+  [ Matthias Klose ]
+  * Fix VCS attribute in the control file. Addresses: #912405.
+  * Update the Linaro support to the 8-2018.08 snapshot.
+  * Fix binutils dependency for Ubuntu trusty.
+
+  [ Nicolas Boulenguez ]
+  * Stop writing -f*-prefix-map options to Ada Library Information files.
+  * Drop obsolete Ada patches.
+  * Fix autogen syntax in ada-armel-libatomic.diff.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 23 Nov 2018 09:33:03 +0100
+
+gcc-8 (8.2.0-9ubuntu1) disco; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 30 Oct 2018 11:56:03 +0100
+
+gcc-8 (8.2.0-9) unstable; urgency=medium
+
+  * Update to SVN 20181029 (r265595) from the gcc-8-branch.
+    - Fix PR middle-end/87087, PR middle-end/87623, PR libstdc++/87641,
+      PR middle-end/87645, PR libstdc++/87749, PR libstdc++/87704,
+      PR other/86198, PR debug/87428, PR debug/87362, PR bootstrap/81033,
+      PR target/81733, PR target/52795, PR target/85669,
+      PR tree-optimization/87473, PR tree-optimization/87665,
+      PR tree-optimization/87745, PR tree-optimization/87665,
+      PR tree-optimization/87700, PR debug/86687.
+  * Update VCS attributes in the control file.
+  * Don't configure native builds with --with-sysroot. Apparently this cannot
+    be completely overridden with the command line option --sysroot.
+  * gcc-8-base: Break gnat (<< 7). Closes: #911633.
+
+  [ Nicolas Boulenguez ]
+  * Update ada patches.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 30 Oct 2018 10:50:43 +0100
+
+gcc-8 (8.2.0-8) unstable; urgency=medium
+
+  * Update to SVN 20181017 (r265234) from the gcc-8-branch.
+    - Fix PR libstdc++/86751, PR libstdc++/78595, PR libstdc++/87061,
+      PR libstdc++/70966, PR libstdc++/77854, PR libstdc++/87538,
+      PR libgcc/85334, PR middle-end/63155, PR target/87511 (AArch64),
+      PR middle-end/87610, PR tree-optimization/87465, PR target/87550 (x86),
+      PR target/87414 (x86), PR tree-optimization/86844, PR target/86731 (PPC),
+      PR target/87370 (x86), PR target/87517 (x86), PR target/87522 (x86),
+      PR other/87353, PR gcov-profile/86109, PR target/82699 (x86),
+      PR target/87467 (x86), PR target/87033 (PPC), PR sanitizer/85774,
+      PR rtl-optimization/86882, PR gcov-profile/85871, PR c++/87582,
+      PR c++/84940, PR gcov-profile/86109, PR c++/85070, PR c++/86881,
+      PR fortran/83999, PR fortran/86372, PR fortran/86111, PR fortran/85395,
+      PR fortran/86830, PR fortran/85954.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 17 Oct 2018 09:45:31 +0200
+
+gcc-8 (8.2.0-7ubuntu1) cosmic; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Mon, 17 Sep 2018 18:15:05 +0200
+
+gcc-8 (8.2.0-7) unstable; urgency=medium
+
+  * Update to SVN 20180917 (r264370) from the gcc-8-branch.
+    - Fix PR libstdc++/87278, PR target/85666 (mmix),  PR middle-end/87188,
+      PR target/87224 (PPC), PR target/86989 (PPC), PR rtl-optimization/86771,
+      PR middle-end/87248, PR c++/87093, PR fortran/87284, PR fortran/87277.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 17 Sep 2018 17:46:50 +0200
+
+gcc-8 (8.2.0-6ubuntu1) cosmic; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sun, 09 Sep 2018 14:48:00 +0200
+
+gcc-8 (8.2.0-6) unstable; urgency=medium
+
+  * Update to SVN 20180908 (r264168) from the gcc-8-branch.
+    - Fix PR c++/87137, PR bootstrap/87225, PR target/87198 (x86),
+      PR middle-end/87138, PR tree-optimization/86835, PR c++/87185,
+      PR c++/87095, PR c++/86836, PR c++/86738, PR c++/86706, PR fortran/86116.
+  * Apply proposed patch for PR go/87260.
+  * Apply proposed patch for PR tree-optimization/87188. Closes: #907586.
+  * Fix PR target/86731 (PPC), taken from the trunk. Closes: #905868.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 09 Sep 2018 14:43:43 +0200
+
+gcc-8 (8.2.0-5ubuntu2) cosmic; urgency=medium
+
+  * Update to SVN 20180908 (r264168) from the gcc-8-branch.
+    - Fix PR c++/87137, PR bootstrap/87225, PR target/87198 (x86),
+      PR middle-end/87138, PR tree-optimization/86835, PR c++/87185,
+      PR c++/87095, PR c++/86836, PR c++/86738, PR c++/86706, PR fortran/86116.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sat, 08 Sep 2018 16:06:58 +0200
+
+gcc-8 (8.2.0-5ubuntu1) cosmic; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 04 Sep 2018 09:16:07 +0200
+
+gcc-8 (8.2.0-5) unstable; urgency=medium
+
+  * Update to SVN 20180904 (r264075) from the gcc-8-branch.
+    - Fix PR sanitizer/86022, PR libstdc++/87116, PR other/86992,
+      PR tree-optimization/86914, PR middle-end/87099,
+      PR rtl-optimization/87065, PR target/86662, PR target/87014,
+      PR target/86640, PR gcov-profile/86817, PR tree-optimization/86871,
+      PR c++/86763, PR fortran/86837, PR libfortran/86704,
+      PR tree-optimization/85859, PR tree-optimization/87074,
+      PR tree-optimization/86927, PR middle-end/87024, PR middle-end/86505,
+      PR tree-optimization/86945, PR tree-optimization/86816,
+      PR lto/86456, PR c++/87155, PR c++/84707, PR c++/87122,
+      PR fortran/86328, PR fortran/86760.
+  * Remove ia64 boostrap work around (Jason Duerstock). Closes: #906675.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 04 Sep 2018 09:04:17 +0200
+
+gcc-8 (8.2.0-4ubuntu1) cosmic; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 14 Aug 2018 13:15:46 +0200
+
+gcc-8 (8.2.0-4) unstable; urgency=medium
+
+  * Update to SVN 20180814 (r263527) from the gcc-8-branch.
+    - Fix PR libstdc++/86597, PR libstdc++/84535, PR libstdc++/60555,
+      PR libstdc++/86874, PR libstdc++/86861, PR target/86386 (x86),
+      PR c++/86728, PR c++/86767, PR fortran/86906.
+
+  [ Nicolas Boulenguez ]
+  * gnat: set ld_library_path for tested gnat tools.
+  * In the gnat autopkg test, tell gnatmake to report progress on stdout.
+  * gnat: Improve the ada-gcc-name patch.
+  * Update ada/debian_packaging.mk.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 14 Aug 2018 11:45:55 +0200
+
+gcc-8 (8.2.0-3ubuntu1) cosmic; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Fri, 03 Aug 2018 12:48:07 +0200
+
+gcc-8 (8.2.0-3) unstable; urgency=medium
+
+  * Update to SVN 20180803 (r263086) from the gcc-8-branch.
+    - Fix PR middle-end/86705, PR target/86820 (m68k).
+  * Build using ISL 0.20.
+  * Fix some autopkg tests (allow stderr, explicitly depend on libc-dev).
+
+ -- Matthias Klose <doko@debian.org>  Fri, 03 Aug 2018 12:32:31 +0200
+
+gcc-8 (8.2.0-2) unstable; urgency=medium
+
+  * Update to SVN 20180802 (r263045) from the gcc-8-branch.
+    - Fix PR middle-end/86542, PR middle-end/86539, PR middle-end/86660,
+      PR middle-end/86627, PR target/86511, PR sanitizer/86759, PR c/85704,
+      PR libstdc++/86734, PR bootstrap/86724, PR target/86651, PR c/86617,
+      PR c++/86190.
+    - Fix PR libstdc++/84654, PR libstdc++/85672. LP: #1783705.
+  * Update cross-build patches for GCC 8.2.
+  * Refresh patches.
+  * Add some basic autopkg tests for Ada, C, C++, Go, OpenMP and Fortran.
+  * Backport r262835 to fix a wrong-code generation on m68k (Adrian Glaubits).
+    Closes: #904998.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 02 Aug 2018 05:59:26 +0200
+
 gcc-8 (8.2.0-1ubuntu2~18.04) bionic-proposed; urgency=medium
 
   * SRU: LP: #1769657. Update the package to the current version in cosmic.

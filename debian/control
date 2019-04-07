@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Ubuntu Core developers <ubuntu-devel-discuss@lists.ubuntu.com>
 XSBC-Original-Maintainer: Debian GCC Maintainers <debian-gcc@lists.debian.org>
 Uploaders: Matthias Klose <doko@debian.org>
-Standards-Version: 4.1.4
+Standards-Version: 4.3.0
 Build-Depends: debhelper (>= 9.20141010), dpkg-dev (>= 1.17.14), g++-multilib [amd64 armel armhf i386 kfreebsd-amd64 mips mips64 mips64el mips64r6 mips64r6el mipsel mipsn32 mipsn32el mipsn32r6 mipsn32r6el mipsr6 mipsr6el powerpc ppc64 s390 s390x sparc sparc64 x32] <!cross>, 
   libc6.1-dev (>= 2.13-0ubuntu6) [alpha ia64] | libc0.3-dev (>= 2.13-0ubuntu6) [hurd-i386] | libc0.1-dev (>= 2.13-0ubuntu6) [kfreebsd-i386 kfreebsd-amd64] | libc6-dev (>= 2.13-0ubuntu6), libc6-dev (>= 2.13-31) [armel armhf], libc6-dev-amd64 [i386 x32], libc6-dev-sparc64 [sparc], libc6-dev-sparc [sparc64], libc6-dev-s390 [s390x], libc6-dev-s390x [s390], libc6-dev-i386 [amd64 x32], libc6-dev-powerpc [ppc64], libc6-dev-ppc64 [powerpc], libc0.1-dev-i386 [kfreebsd-amd64], lib32gcc1 [amd64 ppc64 kfreebsd-amd64 mipsn32 mipsn32el mips64 mips64el mipsn32r6 mipsn32r6el mips64r6 mips64r6el s390x sparc64 x32], libn32gcc1 [mips mipsel mips64 mips64el mipsr6 mipsr6el mips64r6 mips64r6el], lib64gcc1 [i386 mips mipsel mipsn32 mipsn32el mipsr6 mipsr6el mipsn32r6 mipsn32r6el powerpc sparc s390 x32], libc6-dev-mips64 [mips mipsel mipsn32 mipsn32el mipsr6 mipsr6el mipsn32r6 mipsn32r6el], libc6-dev-mipsn32 [mips mipsel mips64 mips64el mipsr6 mipsr6el mips64r6 mips64r6el], libc6-dev-mips32 [mipsn32 mipsn32el mips64 mips64el mipsn32r6 mipsn32r6el mips64r6 mips64r6el], libc6-dev-x32 [amd64 i386], libx32gcc1 [amd64 i386], libc6-dev-armhf [armel], libhfgcc1 [armel], libc6-dev-armel [armhf], libsfgcc1 [armhf], libc6.1-dbg [alpha ia64] | libc0.3-dbg [hurd-i386] | libc0.1-dbg [kfreebsd-i386 kfreebsd-amd64] | libc6-dbg, 
   kfreebsd-kernel-headers (>= 0.84) [kfreebsd-any], linux-libc-dev [m68k], 
@@ -15,16 +15,17 @@ Build-Depends: debhelper (>= 9.20141010), dpkg-dev (>= 1.17.14), g++-multilib [a
   binutils:native (>= 2.30) | binutils-multiarch:native (>= 2.30), binutils-hppa64-linux-gnu:native (>= 2.30) [hppa amd64 i386 x32], 
   gperf (>= 3.0.1), bison (>= 1:2.3), flex, gettext, 
   gdb:native [!riscv64], nvptx-tools [amd64], 
-  texinfo (>= 4.3), locales, sharutils, 
-  procps, gnat-8:native [!m32r !riscv64 !sh3 !sh3eb !sh4eb !m68k], g++-8:native, netbase, 
+  texinfo (>= 4.3), locales-all, sharutils, 
+  procps, gnat-8:native [!m32r !riscv64 !sh3 !sh3eb !sh4eb !m68k !powerpcspe], g++-8:native, netbase, 
   libisl-dev, libmpc-dev (>= 1.0), libmpfr-dev (>= 3.0.0-9~), libgmp-dev (>= 2:5.0.1~), lib32z1-dev [amd64 kfreebsd-amd64], lib64z1-dev [i386], libx32z1-dev [amd64 kfreebsd-amd64 i386], 
-  dejagnu [!m68k !hurd-amd64 !hurd-i386 !hurd-alpha !kfreebsd-amd64 !kfreebsd-i386 !kfreebsd-alpha], coreutils (>= 2.26) | realpath (>= 1.9.12), chrpath, lsb-release, quilt, 
+  dejagnu [!m68k !hurd-amd64 !hurd-i386 !hurd-alpha !kfreebsd-amd64 !kfreebsd-i386 !kfreebsd-alpha] <!nocheck>, coreutils (>= 2.26) | realpath (>= 1.9.12), chrpath, lsb-release, quilt, 
   pkg-config, libgc-dev, 
-   g++-8-alpha-linux-gnu [alpha] <cross>, gobjc-8-alpha-linux-gnu [alpha] <cross>, gfortran-8-alpha-linux-gnu [alpha] <cross>, gdc-8-alpha-linux-gnu [alpha] <cross>, gccgo-8-alpha-linux-gnu [alpha] <cross>, gnat-8-alpha-linux-gnu [alpha] <cross>, g++-8-x86-64-linux-gnu [amd64] <cross>, gobjc-8-x86-64-linux-gnu [amd64] <cross>, gfortran-8-x86-64-linux-gnu [amd64] <cross>, gdc-8-x86-64-linux-gnu [amd64] <cross>, gccgo-8-x86-64-linux-gnu [amd64] <cross>, gnat-8-x86-64-linux-gnu [amd64] <cross>, g++-8-arm-linux-gnueabi [armel] <cross>, gobjc-8-arm-linux-gnueabi [armel] <cross>, gfortran-8-arm-linux-gnueabi [armel] <cross>, gdc-8-arm-linux-gnueabi [armel] <cross>, gccgo-8-arm-linux-gnueabi [armel] <cross>, gnat-8-arm-linux-gnueabi [armel] <cross>, g++-8-arm-linux-gnueabihf [armhf] <cross>, gobjc-8-arm-linux-gnueabihf [armhf] <cross>, gfortran-8-arm-linux-gnueabihf [armhf] <cross>, gdc-8-arm-linux-gnueabihf [armhf] <cross>, gccgo-8-arm-linux-gnueabihf [armhf] <cross>, gnat-8-arm-linux-gnueabihf [armhf] <cross>, g++-8-aarch64-linux-gnu [arm64] <cross>, gobjc-8-aarch64-linux-gnu [arm64] <cross>, gfortran-8-aarch64-linux-gnu [arm64] <cross>, gdc-8-aarch64-linux-gnu [arm64] <cross>, gccgo-8-aarch64-linux-gnu [arm64] <cross>, gnat-8-aarch64-linux-gnu [arm64] <cross>, g++-8-i686-linux-gnu [i386] <cross>, gobjc-8-i686-linux-gnu [i386] <cross>, gfortran-8-i686-linux-gnu [i386] <cross>, gdc-8-i686-linux-gnu [i386] <cross>, gccgo-8-i686-linux-gnu [i386] <cross>, gnat-8-i686-linux-gnu [i386] <cross>, g++-8-mips-linux-gnu [mips] <cross>, gobjc-8-mips-linux-gnu [mips] <cross>, gfortran-8-mips-linux-gnu [mips] <cross>, gdc-8-mips-linux-gnu [mips] <cross>, gccgo-8-mips-linux-gnu [mips] <cross>, gnat-8-mips-linux-gnu [mips] <cross>, g++-8-mipsel-linux-gnu [mipsel] <cross>, gobjc-8-mipsel-linux-gnu [mipsel] <cross>, gfortran-8-mipsel-linux-gnu [mipsel] <cross>, gdc-8-mipsel-linux-gnu [mipsel] <cross>, gccgo-8-mipsel-linux-gnu [mipsel] <cross>, gnat-8-mipsel-linux-gnu [mipsel] <cross>, g++-8-mips64-linux-gnuabi64 [mips64] <cross>, gobjc-8-mips64-linux-gnuabi64 [mips64] <cross>, gfortran-8-mips64-linux-gnuabi64 [mips64] <cross>, gdc-8-mips64-linux-gnuabi64 [mips64] <cross>, gccgo-8-mips64-linux-gnuabi64 [mips64] <cross>, gnat-8-mips64-linux-gnuabi64 [mips64] <cross>, g++-8-mips64el-linux-gnuabi64 [mips64el] <cross>, gobjc-8-mips64el-linux-gnuabi64 [mips64el] <cross>, gfortran-8-mips64el-linux-gnuabi64 [mips64el] <cross>, gdc-8-mips64el-linux-gnuabi64 [mips64el] <cross>, gccgo-8-mips64el-linux-gnuabi64 [mips64el] <cross>, gnat-8-mips64el-linux-gnuabi64 [mips64el] <cross>, g++-8-mips64-linux-gnuabin32 [mipsn32] <cross>, gobjc-8-mips64-linux-gnuabin32 [mipsn32] <cross>, gfortran-8-mips64-linux-gnuabin32 [mipsn32] <cross>, gdc-8-mips64-linux-gnuabin32 [mipsn32] <cross>, gccgo-8-mips64-linux-gnuabin32 [mipsn32] <cross>, gnat-8-mips64-linux-gnuabin32 [mipsn32] <cross>, g++-8-powerpc-linux-gnu [powerpc] <cross>, gobjc-8-powerpc-linux-gnu [powerpc] <cross>, gfortran-8-powerpc-linux-gnu [powerpc] <cross>, gdc-8-powerpc-linux-gnu [powerpc] <cross>, gccgo-8-powerpc-linux-gnu [powerpc] <cross>, gnat-8-powerpc-linux-gnu [powerpc] <cross>, g++-8-powerpc-linux-gnuspe [powerpcspe] <cross>, gobjc-8-powerpc-linux-gnuspe [powerpcspe] <cross>, gfortran-8-powerpc-linux-gnuspe [powerpcspe] <cross>, gdc-8-powerpc-linux-gnuspe [powerpcspe] <cross>, gccgo-8-powerpc-linux-gnuspe [powerpcspe] <cross>, gnat-8-powerpc-linux-gnuspe [powerpcspe] <cross>, g++-8-powerpc64-linux-gnu [ppc64] <cross>, gobjc-8-powerpc64-linux-gnu [ppc64] <cross>, gfortran-8-powerpc64-linux-gnu [ppc64] <cross>, gdc-8-powerpc64-linux-gnu [ppc64] <cross>, gccgo-8-powerpc64-linux-gnu [ppc64] <cross>, gnat-8-powerpc64-linux-gnu [ppc64] <cross>, g++-8-powerpc64le-linux-gnu [ppc64el] <cross>, gobjc-8-powerpc64le-linux-gnu [ppc64el] <cross>, gfortran-8-powerpc64le-linux-gnu [ppc64el] <cross>, gdc-8-powerpc64le-linux-gnu [ppc64el] <cross>, gccgo-8-powerpc64le-linux-gnu [ppc64el] <cross>, gnat-8-powerpc64le-linux-gnu [ppc64el] <cross>, g++-8-m68k-linux-gnu [m68k] <cross>, gobjc-8-m68k-linux-gnu [m68k] <cross>, gfortran-8-m68k-linux-gnu [m68k] <cross>, gdc-8-m68k-linux-gnu [m68k] <cross>, g++-8-sh4-linux-gnu [sh4] <cross>, gobjc-8-sh4-linux-gnu [sh4] <cross>, gfortran-8-sh4-linux-gnu [sh4] <cross>, gnat-8-sh4-linux-gnu [sh4] <cross>, g++-8-sparc64-linux-gnu [sparc64] <cross>, gobjc-8-sparc64-linux-gnu [sparc64] <cross>, gfortran-8-sparc64-linux-gnu [sparc64] <cross>, gdc-8-sparc64-linux-gnu [sparc64] <cross>, gccgo-8-sparc64-linux-gnu [sparc64] <cross>, gnat-8-sparc64-linux-gnu [sparc64] <cross>, g++-8-s390x-linux-gnu [s390x] <cross>, gobjc-8-s390x-linux-gnu [s390x] <cross>, gfortran-8-s390x-linux-gnu [s390x] <cross>, gdc-8-s390x-linux-gnu [s390x] <cross>, gccgo-8-s390x-linux-gnu [s390x] <cross>, gnat-8-s390x-linux-gnu [s390x] <cross>, g++-8-x86-64-linux-gnux32 [x32] <cross>, gobjc-8-x86-64-linux-gnux32 [x32] <cross>, gfortran-8-x86-64-linux-gnux32 [x32] <cross>, gdc-8-x86-64-linux-gnux32 [x32] <cross>, gccgo-8-x86-64-linux-gnux32 [x32] <cross>, gnat-8-x86-64-linux-gnux32 [x32] <cross>, g++-8-mips64el-linux-gnuabin32 [mipsn32el] <cross>, gobjc-8-mips64el-linux-gnuabin32 [mipsn32el] <cross>, gfortran-8-mips64el-linux-gnuabin32 [mipsn32el] <cross>, gdc-8-mips64el-linux-gnuabin32 [mipsn32el] <cross>, gccgo-8-mips64el-linux-gnuabin32 [mipsn32el] <cross>, gnat-8-mips64el-linux-gnuabin32 [mipsn32el] <cross>, g++-8-mipsisa32r6-linux-gnu [mipsr6] <cross>, gobjc-8-mipsisa32r6-linux-gnu [mipsr6] <cross>, gfortran-8-mipsisa32r6-linux-gnu [mipsr6] <cross>, gdc-8-mipsisa32r6-linux-gnu [mipsr6] <cross>, gccgo-8-mipsisa32r6-linux-gnu [mipsr6] <cross>, gnat-8-mipsisa32r6-linux-gnu [mipsr6] <cross>, g++-8-mipsisa32r6el-linux-gnu [mipsr6el] <cross>, gobjc-8-mipsisa32r6el-linux-gnu [mipsr6el] <cross>, gfortran-8-mipsisa32r6el-linux-gnu [mipsr6el] <cross>, gdc-8-mipsisa32r6el-linux-gnu [mipsr6el] <cross>, gccgo-8-mipsisa32r6el-linux-gnu [mipsr6el] <cross>, gnat-8-mipsisa32r6el-linux-gnu [mipsr6el] <cross>, g++-8-mipsisa64r6-linux-gnuabi64 [mips64r6] <cross>, gobjc-8-mipsisa64r6-linux-gnuabi64 [mips64r6] <cross>, gfortran-8-mipsisa64r6-linux-gnuabi64 [mips64r6] <cross>, gdc-8-mipsisa64r6-linux-gnuabi64 [mips64r6] <cross>, gccgo-8-mipsisa64r6-linux-gnuabi64 [mips64r6] <cross>, gnat-8-mipsisa64r6-linux-gnuabi64 [mips64r6] <cross>, g++-8-mipsisa64r6el-linux-gnuabi64 [mips64r6el] <cross>, gobjc-8-mipsisa64r6el-linux-gnuabi64 [mips64r6el] <cross>, gfortran-8-mipsisa64r6el-linux-gnuabi64 [mips64r6el] <cross>, gdc-8-mipsisa64r6el-linux-gnuabi64 [mips64r6el] <cross>, gccgo-8-mipsisa64r6el-linux-gnuabi64 [mips64r6el] <cross>, gnat-8-mipsisa64r6el-linux-gnuabi64 [mips64r6el] <cross>, g++-8-mipsisa64r6-linux-gnuabin32 [mipsn32r6] <cross>, gobjc-8-mipsisa64r6-linux-gnuabin32 [mipsn32r6] <cross>, gfortran-8-mipsisa64r6-linux-gnuabin32 [mipsn32r6] <cross>, gdc-8-mipsisa64r6-linux-gnuabin32 [mipsn32r6] <cross>, gccgo-8-mipsisa64r6-linux-gnuabin32 [mipsn32r6] <cross>, gnat-8-mipsisa64r6-linux-gnuabin32 [mipsn32r6] <cross>, g++-8-mipsisa64r6el-linux-gnuabin32 [mipsn32r6el] <cross>, gobjc-8-mipsisa64r6el-linux-gnuabin32 [mipsn32r6el] <cross>, gfortran-8-mipsisa64r6el-linux-gnuabin32 [mipsn32r6el] <cross>, gdc-8-mipsisa64r6el-linux-gnuabin32 [mipsn32r6el] <cross>, gccgo-8-mipsisa64r6el-linux-gnuabin32 [mipsn32r6el] <cross>, gnat-8-mipsisa64r6el-linux-gnuabin32 [mipsn32r6el] <cross>, 
+   g++-8-alpha-linux-gnu [alpha] <cross>, gobjc-8-alpha-linux-gnu [alpha] <cross>, gfortran-8-alpha-linux-gnu [alpha] <cross>, gdc-8-alpha-linux-gnu [alpha] <cross>, gccgo-8-alpha-linux-gnu [alpha] <cross>, gnat-8-alpha-linux-gnu [alpha] <cross>, g++-8-x86-64-linux-gnu [amd64] <cross>, gobjc-8-x86-64-linux-gnu [amd64] <cross>, gfortran-8-x86-64-linux-gnu [amd64] <cross>, gdc-8-x86-64-linux-gnu [amd64] <cross>, gccgo-8-x86-64-linux-gnu [amd64] <cross>, gnat-8-x86-64-linux-gnu [amd64] <cross>, g++-8-arm-linux-gnueabi [armel] <cross>, gobjc-8-arm-linux-gnueabi [armel] <cross>, gfortran-8-arm-linux-gnueabi [armel] <cross>, gdc-8-arm-linux-gnueabi [armel] <cross>, gccgo-8-arm-linux-gnueabi [armel] <cross>, gnat-8-arm-linux-gnueabi [armel] <cross>, g++-8-arm-linux-gnueabihf [armhf] <cross>, gobjc-8-arm-linux-gnueabihf [armhf] <cross>, gfortran-8-arm-linux-gnueabihf [armhf] <cross>, gdc-8-arm-linux-gnueabihf [armhf] <cross>, gccgo-8-arm-linux-gnueabihf [armhf] <cross>, gnat-8-arm-linux-gnueabihf [armhf] <cross>, g++-8-aarch64-linux-gnu [arm64] <cross>, gobjc-8-aarch64-linux-gnu [arm64] <cross>, gfortran-8-aarch64-linux-gnu [arm64] <cross>, gdc-8-aarch64-linux-gnu [arm64] <cross>, gccgo-8-aarch64-linux-gnu [arm64] <cross>, gnat-8-aarch64-linux-gnu [arm64] <cross>, g++-8-i686-linux-gnu [i386] <cross>, gobjc-8-i686-linux-gnu [i386] <cross>, gfortran-8-i686-linux-gnu [i386] <cross>, gdc-8-i686-linux-gnu [i386] <cross>, gccgo-8-i686-linux-gnu [i386] <cross>, gnat-8-i686-linux-gnu [i386] <cross>, g++-8-mips-linux-gnu [mips] <cross>, gobjc-8-mips-linux-gnu [mips] <cross>, gfortran-8-mips-linux-gnu [mips] <cross>, gdc-8-mips-linux-gnu [mips] <cross>, gccgo-8-mips-linux-gnu [mips] <cross>, gnat-8-mips-linux-gnu [mips] <cross>, g++-8-mipsel-linux-gnu [mipsel] <cross>, gobjc-8-mipsel-linux-gnu [mipsel] <cross>, gfortran-8-mipsel-linux-gnu [mipsel] <cross>, gdc-8-mipsel-linux-gnu [mipsel] <cross>, gccgo-8-mipsel-linux-gnu [mipsel] <cross>, gnat-8-mipsel-linux-gnu [mipsel] <cross>, g++-8-mips64-linux-gnuabi64 [mips64] <cross>, gobjc-8-mips64-linux-gnuabi64 [mips64] <cross>, gfortran-8-mips64-linux-gnuabi64 [mips64] <cross>, gdc-8-mips64-linux-gnuabi64 [mips64] <cross>, gccgo-8-mips64-linux-gnuabi64 [mips64] <cross>, gnat-8-mips64-linux-gnuabi64 [mips64] <cross>, g++-8-mips64el-linux-gnuabi64 [mips64el] <cross>, gobjc-8-mips64el-linux-gnuabi64 [mips64el] <cross>, gfortran-8-mips64el-linux-gnuabi64 [mips64el] <cross>, gdc-8-mips64el-linux-gnuabi64 [mips64el] <cross>, gccgo-8-mips64el-linux-gnuabi64 [mips64el] <cross>, gnat-8-mips64el-linux-gnuabi64 [mips64el] <cross>, g++-8-mips64-linux-gnuabin32 [mipsn32] <cross>, gobjc-8-mips64-linux-gnuabin32 [mipsn32] <cross>, gfortran-8-mips64-linux-gnuabin32 [mipsn32] <cross>, gdc-8-mips64-linux-gnuabin32 [mipsn32] <cross>, gccgo-8-mips64-linux-gnuabin32 [mipsn32] <cross>, gnat-8-mips64-linux-gnuabin32 [mipsn32] <cross>, g++-8-powerpc-linux-gnu [powerpc] <cross>, gobjc-8-powerpc-linux-gnu [powerpc] <cross>, gfortran-8-powerpc-linux-gnu [powerpc] <cross>, gdc-8-powerpc-linux-gnu [powerpc] <cross>, gccgo-8-powerpc-linux-gnu [powerpc] <cross>, gnat-8-powerpc-linux-gnu [powerpc] <cross>, g++-8-powerpc64-linux-gnu [ppc64] <cross>, gobjc-8-powerpc64-linux-gnu [ppc64] <cross>, gfortran-8-powerpc64-linux-gnu [ppc64] <cross>, gdc-8-powerpc64-linux-gnu [ppc64] <cross>, gccgo-8-powerpc64-linux-gnu [ppc64] <cross>, gnat-8-powerpc64-linux-gnu [ppc64] <cross>, g++-8-powerpc64le-linux-gnu [ppc64el] <cross>, gobjc-8-powerpc64le-linux-gnu [ppc64el] <cross>, gfortran-8-powerpc64le-linux-gnu [ppc64el] <cross>, gdc-8-powerpc64le-linux-gnu [ppc64el] <cross>, gccgo-8-powerpc64le-linux-gnu [ppc64el] <cross>, gnat-8-powerpc64le-linux-gnu [ppc64el] <cross>, g++-8-m68k-linux-gnu [m68k] <cross>, gobjc-8-m68k-linux-gnu [m68k] <cross>, gfortran-8-m68k-linux-gnu [m68k] <cross>, gdc-8-m68k-linux-gnu [m68k] <cross>, g++-8-sh4-linux-gnu [sh4] <cross>, gobjc-8-sh4-linux-gnu [sh4] <cross>, gfortran-8-sh4-linux-gnu [sh4] <cross>, gnat-8-sh4-linux-gnu [sh4] <cross>, g++-8-sparc64-linux-gnu [sparc64] <cross>, gobjc-8-sparc64-linux-gnu [sparc64] <cross>, gfortran-8-sparc64-linux-gnu [sparc64] <cross>, gdc-8-sparc64-linux-gnu [sparc64] <cross>, gccgo-8-sparc64-linux-gnu [sparc64] <cross>, gnat-8-sparc64-linux-gnu [sparc64] <cross>, g++-8-s390x-linux-gnu [s390x] <cross>, gobjc-8-s390x-linux-gnu [s390x] <cross>, gfortran-8-s390x-linux-gnu [s390x] <cross>, gdc-8-s390x-linux-gnu [s390x] <cross>, gccgo-8-s390x-linux-gnu [s390x] <cross>, gnat-8-s390x-linux-gnu [s390x] <cross>, g++-8-x86-64-linux-gnux32 [x32] <cross>, gobjc-8-x86-64-linux-gnux32 [x32] <cross>, gfortran-8-x86-64-linux-gnux32 [x32] <cross>, gdc-8-x86-64-linux-gnux32 [x32] <cross>, gccgo-8-x86-64-linux-gnux32 [x32] <cross>, gnat-8-x86-64-linux-gnux32 [x32] <cross>, g++-8-mips64el-linux-gnuabin32 [mipsn32el] <cross>, gobjc-8-mips64el-linux-gnuabin32 [mipsn32el] <cross>, gfortran-8-mips64el-linux-gnuabin32 [mipsn32el] <cross>, gdc-8-mips64el-linux-gnuabin32 [mipsn32el] <cross>, gccgo-8-mips64el-linux-gnuabin32 [mipsn32el] <cross>, gnat-8-mips64el-linux-gnuabin32 [mipsn32el] <cross>, g++-8-mipsisa32r6-linux-gnu [mipsr6] <cross>, gobjc-8-mipsisa32r6-linux-gnu [mipsr6] <cross>, gfortran-8-mipsisa32r6-linux-gnu [mipsr6] <cross>, gdc-8-mipsisa32r6-linux-gnu [mipsr6] <cross>, gccgo-8-mipsisa32r6-linux-gnu [mipsr6] <cross>, gnat-8-mipsisa32r6-linux-gnu [mipsr6] <cross>, g++-8-mipsisa32r6el-linux-gnu [mipsr6el] <cross>, gobjc-8-mipsisa32r6el-linux-gnu [mipsr6el] <cross>, gfortran-8-mipsisa32r6el-linux-gnu [mipsr6el] <cross>, gdc-8-mipsisa32r6el-linux-gnu [mipsr6el] <cross>, gccgo-8-mipsisa32r6el-linux-gnu [mipsr6el] <cross>, gnat-8-mipsisa32r6el-linux-gnu [mipsr6el] <cross>, g++-8-mipsisa64r6-linux-gnuabi64 [mips64r6] <cross>, gobjc-8-mipsisa64r6-linux-gnuabi64 [mips64r6] <cross>, gfortran-8-mipsisa64r6-linux-gnuabi64 [mips64r6] <cross>, gdc-8-mipsisa64r6-linux-gnuabi64 [mips64r6] <cross>, gccgo-8-mipsisa64r6-linux-gnuabi64 [mips64r6] <cross>, gnat-8-mipsisa64r6-linux-gnuabi64 [mips64r6] <cross>, g++-8-mipsisa64r6el-linux-gnuabi64 [mips64r6el] <cross>, gobjc-8-mipsisa64r6el-linux-gnuabi64 [mips64r6el] <cross>, gfortran-8-mipsisa64r6el-linux-gnuabi64 [mips64r6el] <cross>, gdc-8-mipsisa64r6el-linux-gnuabi64 [mips64r6el] <cross>, gccgo-8-mipsisa64r6el-linux-gnuabi64 [mips64r6el] <cross>, gnat-8-mipsisa64r6el-linux-gnuabi64 [mips64r6el] <cross>, g++-8-mipsisa64r6-linux-gnuabin32 [mipsn32r6] <cross>, gobjc-8-mipsisa64r6-linux-gnuabin32 [mipsn32r6] <cross>, gfortran-8-mipsisa64r6-linux-gnuabin32 [mipsn32r6] <cross>, gdc-8-mipsisa64r6-linux-gnuabin32 [mipsn32r6] <cross>, gccgo-8-mipsisa64r6-linux-gnuabin32 [mipsn32r6] <cross>, gnat-8-mipsisa64r6-linux-gnuabin32 [mipsn32r6] <cross>, g++-8-mipsisa64r6el-linux-gnuabin32 [mipsn32r6el] <cross>, gobjc-8-mipsisa64r6el-linux-gnuabin32 [mipsn32r6el] <cross>, gfortran-8-mipsisa64r6el-linux-gnuabin32 [mipsn32r6el] <cross>, gdc-8-mipsisa64r6el-linux-gnuabin32 [mipsn32r6el] <cross>, gccgo-8-mipsisa64r6el-linux-gnuabin32 [mipsn32r6el] <cross>, gnat-8-mipsisa64r6el-linux-gnuabin32 [mipsn32r6el] <cross>, 
 Build-Depends-Indep: doxygen (>= 1.7.2), graphviz (>= 2.2), ghostscript, texlive-latex-base, xsltproc, libxml2-utils, docbook-xsl-ns
 Homepage: http://gcc.gnu.org/
-Vcs-Browser: http://svn.debian.org/viewsvn/gcccvs/branches/sid/gcc-8/
-Vcs-Svn: svn://anonscm.debian.org/gcccvs/branches/sid/gcc-8
+Vcs-Browser: https://salsa.debian.org/toolchain-team/gcc/tree/gcc-8-debian
+Vcs-Git: https://salsa.debian.org/toolchain-team/gcc.git -b gcc-8-debian
+XS-Testsuite: autopkgtest
 
 Package: gcc-8-base
 Architecture: any
@@ -42,7 +43,7 @@ Package: libgcc1
 X-DH-Build-For-Type: target
 Architecture: any
 Section: libs
-Priority: required
+Priority: optional
 Depends: gcc-8-base (= ${gcc:Version}), ${shlibs:Depends}, ${misc:Depends}
 Provides: libgcc1-armel [armel], libgcc1-armhf [armhf]
 Multi-Arch: same
@@ -68,7 +69,7 @@ Package: libgcc2
 X-DH-Build-For-Type: target
 Architecture: m68k
 Section: libs
-Priority: required
+Priority: optional
 Depends: gcc-8-base (= ${gcc:Version}), ${shlibs:Depends}, ${misc:Depends}
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
@@ -112,7 +113,7 @@ Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Breaks: ${multiarch:breaks}
 Section: libs
-Priority: required
+Priority: optional
 Depends: gcc-8-base (= ${gcc:Version}), ${shlibs:Depends}, ${misc:Depends}
 Description: GCC support library
  Shared version of the support library, a library of internal subroutines
@@ -1627,7 +1628,7 @@ Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Priority: optional
-Depends: gcc-8-base (= ${gcc:Version}), ${shlibs:Depends}, ${misc:Depends}
+Depends: gcc-8-base (= ${gcc:Version}), libgcc-8-dev, binutils, ${shlibs:Depends}, ${misc:Depends}
 Breaks: python-gccjit (<< 0.4-4), python3-gccjit (<< 0.4-4)
 Description: GCC just-in-time compilation (shared library)
  libgccjit provides an embeddable shared library with an API for adding
@@ -2340,7 +2341,7 @@ Package: libstdc++6
 X-DH-Build-For-Type: target
 Architecture: any
 Section: libs
-Priority: important
+Priority: optional
 Depends: gcc-8-base (= ${gcc:Version}), ${dep:libc}, ${shlibs:Depends}, ${misc:Depends}
 Provides: libstdc++6-armel [armel], libstdc++6-armhf [armhf]
 Multi-Arch: same
@@ -2881,6 +2882,66 @@ Description: Phobos D standard library
  .
  For more information check http://www.dlang.org/phobos/
 
+Package: lib64gphobos-8-dev
+X-DH-Build-For-Type: target
+Architecture: i386 powerpc sparc s390 mips mipsel mipsn32 mipsn32el mipsr6 mipsr6el mipsn32r6 mipsn32r6el x32
+Section: libdevel
+Priority: optional
+Depends: gcc-8-base (= ${gcc:Version}), lib64gphobos76 (>= ${gdc:Version}),
+  lib64gcc-8-dev (= ${gcc:Version}), lib64z1-dev, ${shlibs:Depends}, ${misc:Depends}
+Description: Phobos D standard library (64bit development files)
+ This is the Phobos standard library that comes with the D2 compiler.
+ .
+ For more information check http://www.dlang.org/phobos/
+
+Package: lib32gphobos-8-dev
+X-DH-Build-For-Type: target
+Architecture: amd64 ppc64 kfreebsd-amd64 s390x sparc64 x32 mipsn32 mipsn32el mips64 mips64el mipsn32r6 mipsn32r6el mips64r6 mips64r6el
+Section: libdevel
+Priority: optional
+Depends: gcc-8-base (= ${gcc:Version}), lib32gphobos76 (>= ${gdc:Version}),
+  lib32gcc-8-dev (= ${gcc:Version}), lib32z1-dev, ${shlibs:Depends}, ${misc:Depends}
+Description: Phobos D standard library (32bit development files)
+ This is the Phobos standard library that comes with the D2 compiler.
+ .
+ For more information check http://www.dlang.org/phobos/
+
+Package: libx32gphobos-8-dev
+X-DH-Build-For-Type: target
+Architecture: amd64 i386
+Section: libdevel
+Priority: optional
+Depends: gcc-8-base (= ${gcc:Version}), libx32gphobos76 (>= ${gdc:Version}),
+  libx32gcc-8-dev (= ${gcc:Version}), ${dep:libx32z}, ${shlibs:Depends}, ${misc:Depends}
+Description: Phobos D standard library (x32 development files)
+ This is the Phobos standard library that comes with the D2 compiler.
+ .
+ For more information check http://www.dlang.org/phobos/
+
+Package: libhfgphobos-8-dev
+X-DH-Build-For-Type: target
+Architecture: armel
+Section: libdevel
+Priority: optional
+Depends: gcc-8-base (= ${gcc:Version}), libhfgphobos76 (>= ${gdc:Version}),
+  libhfgcc-8-dev (= ${gcc:Version}), ${shlibs:Depends}, ${misc:Depends}
+Description: Phobos D standard library (hard float ABI development files)
+ This is the Phobos standard library that comes with the D2 compiler.
+ .
+ For more information check http://www.dlang.org/phobos/
+
+Package: libsfgphobos-8-dev
+X-DH-Build-For-Type: target
+Architecture: armhf
+Section: libdevel
+Priority: optional
+Depends: gcc-8-base (= ${gcc:Version}), libsfgphobos76 (>= ${gdc:Version}),
+  libsfgcc-8-dev (= ${gcc:Version}), ${shlibs:Depends}, ${misc:Depends}
+Description: Phobos D standard library (soft float ABI development files)
+ This is the Phobos standard library that comes with the D2 compiler.
+ .
+ For more information check http://www.dlang.org/phobos/
+
 Package: libgphobos76
 X-DH-Build-For-Type: target
 Section: libs
@@ -2903,18 +2964,6 @@ Priority: optional
 Depends: gcc-8-base (= ${gcc:Version}), libgphobos76 (= ${gdc:Version}), ${misc:Depends}
 Replaces: libgphobos68-dbg
 Description: Phobos D standard library (debug symbols)
- This is the Phobos standard library that comes with the D2 compiler.
- .
- For more information check http://www.dlang.org/phobos/
-
-Package: lib64gphobos-8-dev
-X-DH-Build-For-Type: target
-Architecture: i386 powerpc sparc s390 mips mipsel mipsn32 mipsn32el mipsr6 mipsr6el mipsn32r6 mipsn32r6el x32
-Section: libdevel
-Priority: optional
-Depends: gcc-8-base (= ${gcc:Version}), lib64gphobos76 (>= ${gdc:Version}),
-  lib64gcc-8-dev (= ${gcc:Version}), lib64z1-dev, ${shlibs:Depends}, ${misc:Depends}
-Description: Phobos D standard library (64bit development files)
  This is the Phobos standard library that comes with the D2 compiler.
  .
  For more information check http://www.dlang.org/phobos/
@@ -2943,18 +2992,6 @@ Description: Phobos D standard library (debug symbols)
  .
  For more information check http://www.dlang.org/phobos/
 
-Package: lib32gphobos-8-dev
-X-DH-Build-For-Type: target
-Architecture: amd64 ppc64 kfreebsd-amd64 s390x sparc64 x32 mipsn32 mipsn32el mips64 mips64el mipsn32r6 mipsn32r6el mips64r6 mips64r6el
-Section: libdevel
-Priority: optional
-Depends: gcc-8-base (= ${gcc:Version}), lib32gphobos76 (>= ${gdc:Version}),
-  lib32gcc-8-dev (= ${gcc:Version}), lib32z1-dev, ${shlibs:Depends}, ${misc:Depends}
-Description: Phobos D standard library (32bit development files)
- This is the Phobos standard library that comes with the D2 compiler.
- .
- For more information check http://www.dlang.org/phobos/
-
 Package: lib32gphobos76
 X-DH-Build-For-Type: target
 Section: libs
@@ -2975,18 +3012,6 @@ Priority: optional
 Depends: gcc-8-base (= ${gcc:Version}), lib32gphobos76 (= ${gdc:Version}), ${misc:Depends}
 Replaces: lib32gphobos68-dbg
 Description: Phobos D standard library (debug symbols)
- This is the Phobos standard library that comes with the D2 compiler.
- .
- For more information check http://www.dlang.org/phobos/
-
-Package: libx32gphobos-8-dev
-X-DH-Build-For-Type: target
-Architecture: amd64 i386
-Section: libdevel
-Priority: optional
-Depends: gcc-8-base (= ${gcc:Version}), libx32gphobos76 (>= ${gdc:Version}),
-  libx32gcc-8-dev (= ${gcc:Version}), ${dep:libx32z}, ${shlibs:Depends}, ${misc:Depends}
-Description: Phobos D standard library (x32 development files)
  This is the Phobos standard library that comes with the D2 compiler.
  .
  For more information check http://www.dlang.org/phobos/
@@ -3015,18 +3040,6 @@ Description: Phobos D standard library (debug symbols)
  .
  For more information check http://www.dlang.org/phobos/
 
-Package: libhfgphobos-8-dev
-X-DH-Build-For-Type: target
-Architecture: armel
-Section: libdevel
-Priority: optional
-Depends: gcc-8-base (= ${gcc:Version}), libhfgphobos76 (>= ${gdc:Version}),
-  libhfgcc-8-dev (= ${gcc:Version}), ${shlibs:Depends}, ${misc:Depends}
-Description: Phobos D standard library (hard float ABI development files)
- This is the Phobos standard library that comes with the D2 compiler.
- .
- For more information check http://www.dlang.org/phobos/
-
 Package: libhfgphobos76
 X-DH-Build-For-Type: target
 Section: libs
@@ -3047,18 +3060,6 @@ Priority: optional
 Depends: gcc-8-base (= ${gcc:Version}), libhfgphobos76 (= ${gdc:Version}), ${misc:Depends}
 Replaces: libhfgphobos68-dbg
 Description: Phobos D standard library (debug symbols)
- This is the Phobos standard library that comes with the D2 compiler.
- .
- For more information check http://www.dlang.org/phobos/
-
-Package: libsfgphobos-8-dev
-X-DH-Build-For-Type: target
-Architecture: armhf
-Section: libdevel
-Priority: optional
-Depends: gcc-8-base (= ${gcc:Version}), libsfgphobos76 (>= ${gdc:Version}),
-  libsfgcc-8-dev (= ${gcc:Version}), ${shlibs:Depends}, ${misc:Depends}
-Description: Phobos D standard library (soft float ABI development files)
  This is the Phobos standard library that comes with the D2 compiler.
  .
  For more information check http://www.dlang.org/phobos/
@@ -3204,9 +3205,11 @@ Description: GCC OpenMP v4.5 plugin for offloading to NVPTX
  installed separately.
 
 Package: gcc-8-source
+Multi-Arch: foreign
 Architecture: all
 Priority: optional
-Depends: make, autoconf2.64, quilt, patchutils, sharutils, gawk, ${misc:Depends}
+Depends: make, autoconf2.64, quilt, patchutils, sharutils, gawk, lsb-release,
+  ${misc:Depends}
 Description: Source of the GNU Compiler Collection
  This package contains the sources and patches which are needed to
  build the GNU Compiler Collection (GCC).

@@ -120,11 +120,6 @@ ifneq ($(derivative),Ubuntu)
   endif
 endif
 
-# work around PR 57689
-ifeq ($(DEB_TARGET_ARCH),ia64)
-  BOOT_CFLAGS	= -g -O1
-endif
-
 ifeq ($(with_ssp_default),yes)
   STAGE1_CFLAGS	= -g
   ifeq (,$(BOOT_CFLAGS))
@@ -225,7 +220,8 @@ ifneq (,$(filter $(DEB_STAGE),stage1 stage2))
 	--libexecdir=/$(libexecdir) \
 	--libdir=/$(PF)/$(configured_libdir) \
 	$(if $(with_build_sysroot),--with-build-sysroot=$(with_build_sysroot)) \
-	$(if $(with_sysroot),--with-sysroot=$(with_sysroot)) \
+	$(if $(findstring build-cross, $(build_type)), \
+		$(if $(with_sysroot),--with-sysroot=$(with_sysroot))) \
 	--enable-linker-build-id
 
   ifeq ($(with_multiarch_lib),yes)
@@ -269,7 +265,7 @@ endif
 ifeq ($(with_bootstrap),off)
   CONFARGS += --disable-bootstrap
 else ifneq ($(with_bootstrap),)
-  CONFARGS += --enable-bootstrap=$(with_bootstrap)
+  CONFARGS += --enable-bootstrap
 endif
 
 ifneq ($(with_sysroot),)
@@ -352,12 +348,12 @@ endif # !DEB_STAGE
 
 CONFARGS += --with-system-zlib
 
-ifeq ($(with_libphobos),yes)
+ifeq ($(with_phobos),yes)
   CONFARGS += --with-target-system-zlib
 endif
 
 ifeq ($(with_d),yes)
-  ifneq ($(with_libphobos),yes)
+  ifneq ($(with_phobos),yes)
     CONFARGS += --disable-libphobos
   endif
 endif
@@ -789,39 +785,16 @@ endif
 
 ifeq ($(with_bootstrap),off)
   bootstrap_target =
+else ifeq ($(with_bootstrap),profiled)
+  bootstrap_target = profiledbootstrap
+  bootstrap_target = profiledbootstrap-lean
 else ifeq ($(with_bootstrap),)
   bootstrap_target = bootstrap
-  # no profiledbootstrap on the following architectures
-  # - m68k: we're happy that it builds at all
-  no_profiled_bs_archs := alpha arm hppa m68k mips mipsel mips64 mips64el \
-	powerpcspe s390 sh4 sparc sparc64
-  ifeq (,$(filter $(DEB_TARGET_ARCH),$(no_profiled_bs_archs)))
-    bootstrap_target = profiledbootstrap
-  endif
   ifneq (, $(filter $(PKGSOURCE),gcc-$(BASE_VERSION) gnat-$(BASE_VERSION) gcc-snapshot))
     bootstrap_target = bootstrap
   endif
   ifneq (,$(DEB_STAGE))
     bootstrap_target = bootstrap
-  endif
-
-  ifeq ($(derivative),Debian)
-    # disable profiled bootstrap for backports
-    ifneq (,$(filter $(distrelease),squeeze wheezy jessie))
-      bootstrap_target = bootstrap
-    endif
-    # disable profiled bootstrap on slow archs, get to testing first ...
-    ifneq (,$(filter $(DEB_TARGET_ARCH), arm arm64 armel armhf mips mipsel sparc))
-      bootstrap_target = bootstrap
-    endif
-  endif
-  ifeq ($(derivative),Ubuntu)
-    ifneq (,$(filter $(distrelease),lucid precise trusty utopic vivid wily))
-      bootstrap_target = bootstrap
-    endif
-    ifeq ($(with_linaro_branch),yes)
-      bootstrap_target = bootstrap
-    endif
   endif
 endif
 
@@ -1157,10 +1130,10 @@ else
 endif
 ifeq ($(with_d),yes)
 	@echo "Will build the D compiler"
-  ifeq ($(with_libphobos),yes)
+  ifeq ($(with_phobos),yes)
 	@echo "Will build the phobos D runtime library."
   else
-	@echo "Will not build the phobos D runtime library: $(with_libphobos)"
+	@echo "Will not build the phobos D runtime library: $(with_phobos)"
   endif
 else
 	@echo "Will not build the D compiler: $(with_d)"
@@ -2398,7 +2371,7 @@ $(install_nvptx_stamp): $(build_nvptx_stamp) $(install_stamp) \
 	  $(d)-nvptx/$(PF)/lib/gcc/$(DEB_HOST_GNU_TYPE)/$(versiondir)/accel/nvptx-none/mgomp/
 	find $(d)-nvptx -name \*.la | xargs rm -f
 	rm -rf $(d)-nvptx/$(PF)/nvptx-none/include
-	-find $(d)-nvptx -type -d -empty -delete
+	-find $(d)-nvptx -type d -empty -delete
 	@echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 	find $(d)-nvptx
 	@echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

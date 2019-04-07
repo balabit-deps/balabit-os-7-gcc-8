@@ -202,9 +202,6 @@ ifneq ($(DEB_BUILD_GNU_TYPE),$(DEB_HOST_GNU_TYPE))
     build_type = cross-build-cross
   else
     # cross building the native compiler
-    ifeq (,$(filter $(distrelease),lenny etch squeeze dapper hardy jaunty karmic lucid))
-      with_sysroot = /
-    endif
     build_type = cross-build-native
   endif
 else
@@ -218,10 +215,6 @@ else
     build_type = build-cross
   else
     # native build
-    # first ones are wheezy and maverick
-    ifeq (,$(filter $(distrelease),lenny etch squeeze dapper hardy jaunty karmic lucid))
-      with_sysroot = /
-    endif
     build_type = build-native
   endif
 endif
@@ -325,6 +318,16 @@ ifneq ($(findstring gccdebug, $(DEB_BUILD_OPTIONS)),)
   export DEB_BUILD_OPTIONS
 endif
 
+ifneq ($(trunk_build),yes)
+  ifeq ($(build_type),build-native)
+    ifeq (,$(DEB_STAGE))
+      ifneq (,$(filter $(DEB_HOST_ARCH), amd64 i386 armhf arm64 ppc64el s390x))
+        with_bootstrap := profiled
+      endif
+    endif
+  endif
+endif
+
 # -------------------------------------------------------------------
 # stage options
 ifdef DEB_STAGE
@@ -405,10 +408,9 @@ endif
 # build using fsf or linaro
 ifeq ($(distribution),Ubuntu)
   ifneq (,$(findstring $(DEB_TARGET_ARCH),arm64 armel armhf))
-    with_linaro_branch = yes
+    #with_linaro_branch = yes
   endif
 endif
-with_linaro_branch =
 
 # build using fsf or the ibm branch
 ifeq ($(distribution),Ubuntu)
@@ -730,6 +732,9 @@ endif
 ifneq (,$(findstring $(DEB_TARGET_GNU_SYSTEM),$(ada_no_systems)))
   with_ada := disabled for system $(DEB_TARGET_GNU_SYSTEM)
 endif
+ifneq (,$(filter $(DEB_TARGET_ARCH),powerpcspe))
+  with_ada := disabled for target $(DEB_TARGET_ARCH)
+endif
 ifeq ($(ada_no_cross)-$(DEB_CROSS),yes-yes)
   with_ada := disabled for cross compiler package
 endif
@@ -960,26 +965,23 @@ ifeq ($(with_d)-$(with_separate_gdc),yes-yes)
 endif
 
 ifeq ($(with_d),yes)
-  libphobos_archs = amd64 arm64 armel armhf i386 x32 kfreebsd-amd64 kfreebsd-i386
-  ifneq (,$(libphobos_archs))
+  phobos_archs = amd64 arm64 armel armhf i386 x32 kfreebsd-amd64 kfreebsd-i386
+  ifneq (,$(filter $(DEB_TARGET_ARCH), $(phobos_archs)))
     with_phobos := yes
   endif
-  ifneq (,$(filter $(DEB_TARGET_ARCH), $(libphobos_archs)))
-    with_libphobos := yes
-  endif
 
-  libphobos_no_cpus := alpha avr arm64 hppa ia64 m68k \
+  phobos_no_cpus := alpha avr arm64 hppa ia64 m68k \
 	mips mipsel mips64 mips64el mipsn32 mipsn32el \
 	mipsr6 mipsr6el mips64r6 mips64r6el mipsn32r6 mipsn32r6el \
 	powerpc powerpcspe ppc64 s390 s390x sh4 sparc sparc64
-  libphobos_no_systems := gnu kfreebsd-gnu
-  ifneq (,$(filter $(DEB_TARGET_ARCH_CPU),$(libphobos_no_cpus)))
-    with_libphobos := disabled for cpu $(DEB_TARGET_ARCH_CPU)
+  phobos_no_systems := gnu kfreebsd-gnu
+  ifneq (,$(filter $(DEB_TARGET_ARCH_CPU),$(phobos_no_cpus)))
+    with_phobos := disabled for cpu $(DEB_TARGET_ARCH_CPU)
   endif
-  ifneq (,$(filter $(DEB_TARGET_GNU_SYSTEM),$(libphobos_no_systems)))
-    with_libphobos := disabled for system $(DEB_TARGET_GNU_SYSTEM)
+  ifneq (,$(filter $(DEB_TARGET_GNU_SYSTEM),$(phobos_no_systems)))
+    with_phobos := disabled for system $(DEB_TARGET_GNU_SYSTEM)
   endif
-  with_libphobosdev := $(with_libphobos)
+  with_libphobosdev := $(with_phobos)
 
   enabled_languages += d
 endif
@@ -1325,12 +1327,11 @@ else
   endif
 
   # libasan -----------------
-  # asan changes soname in GCC 8
-  #ifeq ($(with_asan)-$(with_common_libs),yes-yes)
+  ifeq ($(with_asan)-$(with_common_libs),yes-yes)
     ifeq ($(with_asan),yes)
       with_libasan := yes
     endif
-  #endif
+  endif
 
   # liblsan -----------------
   ifeq ($(with_lsan)-$(with_common_libs),yes-yes)
@@ -1345,12 +1346,11 @@ else
   endif
 
   # libubsan -----------------
-  # ubsan changes soname in GCC 8
-  #ifeq ($(with_ubsan)-$(with_common_libs),yes-yes)
+  ifeq ($(with_ubsan)-$(with_common_libs),yes-yes)
     ifeq ($(with_ubsan),yes)
       with_libubsan := yes
     endif
-  #endif
+  endif
 
   # libvtv -----------------
   ifeq ($(with_vtv)-$(with_common_libs),yes-yes)
@@ -1384,6 +1384,13 @@ else
     with_shared_libgcc := yes
     ifeq ($(with_common_libs),yes)
       with_libgcc := yes
+    endif
+  endif
+
+  # libphobos -----------------
+  ifeq ($(with_phobos)-$(with_common_libs),yes-yes)
+    ifeq ($(with_common_libs),yes)
+      with_libphobos := yes
     endif
   endif
 
@@ -1493,6 +1500,8 @@ endif
 ifneq (,$(wildcard /usr/bin/localedef))
   locale_data = generate
 endif
+# try to b-d on locales-all
+locale_data =
 
 ifneq (,$(filter $(build_type), build-cross cross-build-cross))
   ldconfig_arg = --noscripts
@@ -1643,7 +1652,7 @@ define gen_biarch
     ifeq ($(with_brig),yes)
       biarch_multidir_names += libhsail-rt
     endif
-    ifeq ($(with_libphobos),yes)
+    ifeq ($(with_phobos),yes)
       ifeq (,$(filter $1, hf))
         biarch_multidir_names += libphobos
       endif
@@ -1887,7 +1896,7 @@ ifeq ($(with_d),yes)
 endif
 
 ifeq ($(with_offload_nvptx),yes)
-  nl_nvptx_tarpath	:= $(firstword $(wildcard nvptx-newlib-*.tar.* /usr/src/gcc-$(BASE_VERSION)/nvptx-newlib-*.tar.*))
+  nl_nvptx_tarpath	:= $(firstword $(wildcard newlib-*.tar.* /usr/src/gcc-$(BASE_VERSION)/newlib-*.tar.*))
   nl_nvptx_tarball	:= $(notdir $(nl_nvptx_tarpath))
   nl_nvptx_srcdir	:= $(patsubst %.tar.xz,%,$(patsubst %.tar.lzma,%,$(patsubst %.tar.gz,%,$(nl_nvptx_tarball:.tar.bz2=))))
 endif
