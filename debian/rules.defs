@@ -60,11 +60,13 @@ endif
 DEB_BUILD_ARCH		?= $(call vafilt,$(DPKG_VARS),DEB_BUILD_ARCH)
 DEB_BUILD_GNU_TYPE	?= $(call vafilt,$(DPKG_VARS),DEB_BUILD_GNU_TYPE)
 DEB_BUILD_MULTIARCH	?= $(call vafilt,$(DPKG_VARS),DEB_BUILD_MULTIARCH)
+DEB_BUILD_ARCH_BITS	?= $(call vafilt,$(DPKG_VARS),DEB_BUILD_ARCH_BITS)
 DEB_HOST_ARCH		?= $(call vafilt,$(DPKG_VARS),DEB_HOST_ARCH)
 DEB_HOST_GNU_CPU	?= $(call vafilt,$(DPKG_VARS),DEB_HOST_GNU_CPU)
 DEB_HOST_GNU_SYSTEM	?= $(call vafilt,$(DPKG_VARS),DEB_HOST_GNU_SYSTEM)
 DEB_HOST_GNU_TYPE	?= $(call vafilt,$(DPKG_VARS),DEB_HOST_GNU_TYPE)
 DEB_HOST_MULTIARCH	?= $(call vafilt,$(DPKG_VARS),DEB_HOST_MULTIARCH)
+DEB_HOST_ARCH_BITS	?= $(call vafilt,$(DPKG_VARS),DEB_HOST_ARCH_BITS)
 
 ifeq ($(derivative),Ubuntu)
   ifeq (,$(filter $(distrelease),dapper hardy lucid precise quantal raring saucy trusty))
@@ -308,9 +310,6 @@ ifdef WITH_BOOTSTRAP
   # longer needed.
   with_bootstrap = $(WITH_BOOTSTRAP)
 endif
-ifneq ($(findstring nostrap, $(DEB_BUILD_OPTIONS)),)
-  with_bootstrap := off
-endif
 
 ifneq ($(findstring gccdebug, $(DEB_BUILD_OPTIONS)),)
   with_bootstrap := off
@@ -321,11 +320,68 @@ endif
 ifneq ($(trunk_build),yes)
   ifeq ($(build_type),build-native)
     ifeq (,$(DEB_STAGE))
-      ifneq (,$(filter $(DEB_HOST_ARCH), amd64 i386 armhf arm64 ppc64el s390x))
-        with_bootstrap := profiled
+      ifeq (,$(filter $(distrelease),wheezy jessie stretch precise trusty xenial bionic))
+        ifneq (,$(filter $(DEB_HOST_ARCH), amd64 i386 armhf arm64 powerpc ppc64 ppc64el s390x))
+          with_bootstrap := profiled
+        endif
       endif
     endif
   endif
+
+  ifneq ($(findstring nostrap, $(DEB_BUILD_OPTIONS)),)
+    with_bootstrap := off
+  endif
+
+  # Enable LTO only for 64bit builds
+  ifeq ($(DEB_BUILD_ARCH_BITS)-$(DEB_HOST_ARCH_BITS),64-64)
+    with_lto_build := yes
+    # times out on the buildds ...
+    ifneq (,$(filter $(DEB_HOST_ARCH), arm64))
+      with_lto_build :=
+    endif
+  endif
+  with_lto_build := yes
+
+  # FIXME: hppa has issues with parsing the jobs output.
+  # FIXME: m68k, riscv64 and sh4 running on simulators, don't care ...
+  # FIXME: buildds not powerful ebough: mips*, sparc64
+  # FIXME: just let it build, takes too long: hurd-i386
+  # FIXME: not yet tried to build: alpha
+  # FIXME: armhf and arm64 ftbfs, started with 8.3.0-22
+  ifneq (,$(filter $(DEB_HOST_ARCH), alpha armhf arm64 hppa m68k mips mipsel mips64el riscv64 sh4 sparc64 hurd-i386))
+    with_lto_build :=
+  endif
+  # Debian armel/armhf buildds too slow
+  ifneq (,$(filter $(distribution)-$(DEB_HOST_ARCH), Debian-armel Debian-armhf))
+    with_lto_build :=
+  endif
+
+  # FIXME: newer binutils needed?
+  ifneq (,$(filter $(distrelease),precise trusty xenial bionic))
+    with_bootstrap :=
+    with_lto_build :=
+  endif
+endif
+
+ifneq ($(findstring nolto, $(DEB_BUILD_OPTIONS)),)
+  with_lto_build :=
+endif
+
+ifneq ($(findstring nopgo, $(DEB_BUILD_OPTIONS)),)
+  ifeq ($(with_bootstrap),profiled)
+    with_bootstrap :=
+  endif
+endif
+
+ifeq ($(with_lto_build),yes)
+  # FIXME: Debian #931319, fixed in dwz trunk 20190702
+  ifeq (,$(filter $(distrelease),jessie stretch precise trusty xenial bionic cosmic disco))
+    with_dwz := yes
+  endif
+else ifneq (,$(filter $(distrelease),jessie stretch precise trusty xenial bionic))
+  with_dwz :=
+else
+  with_dwz := yes
 endif
 
 # -------------------------------------------------------------------
@@ -391,6 +447,25 @@ envfilt	= $(strip $(or $(call lfilt,$(1),$(2)),$(call nlfilt,$(1),$(3)),$(call w
 # -------------------------------------------------------------------
 # architecture specific config
 
+ifeq (,$(filter $(distrelease),wheezy jessie stretch buster precise trusty xenial bionic cosmic disco))
+  ifneq (,$(filter $(DEB_TARGET_ARCH), amd64 arm64 i386 ppc64 ppc64el s390x x32))
+    with_async_unwind = yes
+  endif
+endif
+
+ifeq ($(derivative),Ubuntu)
+  ifeq (,$(filter $(distrelease),precise trusty xenial bionic cosmic disco))
+    ifneq (,$(filter $(DEB_TARGET_ARCH), amd64 arm64 i386 ppc64 ppc64el s390x x32))
+      with_stack_clash := yes
+    endif
+  endif
+  ifeq (,$(filter $(distrelease),precise trusty xenial bionic cosmic disco))
+    ifneq (,$(filter $(DEB_TARGET_ARCH), amd64 i386 x32))
+      with_cf_protection := yes
+    endif
+  endif
+endif
+
 ifeq ($(DEB_TARGET_ARCH),armhf)
   ifeq ($(distribution),Raspbian)
     with_arm_thumb := no
@@ -408,7 +483,7 @@ endif
 # build using fsf or linaro
 ifeq ($(distribution),Ubuntu)
   ifneq (,$(findstring $(DEB_TARGET_ARCH),arm64 armel armhf))
-    #with_linaro_branch = yes
+    with_linaro_branch = yes
   endif
 endif
 
@@ -453,6 +528,19 @@ with_common_pkgs := yes
 with_common_libs := yes
 # XXX: should with_common_libs be "yes" only if this is the default compiler
 # version on the targeted arch?
+
+# build -dbg packages (with_dbg is empty when -dbg package are not built)
+ifneq (,$(filter $(distrelease),wheezy jessie stretch buster precise xenial bionic cosmic disco eoan))
+  with_dbg = yes
+else
+  ifeq ($(derivative),Ubuntu)
+    v_dbg = 8.3.0-26ubuntu1
+  else ifeq ($(derivative),Debian)
+    v_dbg = 8.3.0-26
+  else
+    $(error unknown version for -dbgsym package migration)
+  endif
+endif
 
 # is this a multiarch-enabled build?
 ifeq (,$(filter $(distrelease),lenny etch squeeze dapper hardy jaunty karmic lucid maverick))
@@ -647,6 +735,9 @@ endif
 ifneq (,$(with_rtlibs))
   with_jit := disabled for rtlibs stage
 endif
+ifneq ($(findstring nojit, $(DEB_BUILD_OPTIONS)),)
+  with_jit := disabled by DEB_BUILD_OPTIONS
+endif
 with_jit := $(call envfilt, jit, , , $(with_jit))
 
 ifeq (,$(findstring gcc-,$(PKGSOURCE)))
@@ -668,12 +759,19 @@ ifneq (,$(filter $(DEB_TARGET_ARCH),$(nvptx_archs)))
   offload_targets += nvptx-none
   with_offload_nvptx := yes
 endif
+ifneq (,$(filter $(distrelease),lucid precise))
+  offload_targets :=
+  with_offload_nvptx :=
+endif
 ifneq (,$(findstring build-cross, $(build_type)))
   with_offload_nvptx := disabled for cross builds
 endif
 
 ifeq ($(single_package),yes)
   with_offload_nvptx := disabled for snapshot builds
+endif
+ifneq ($(findstring nonvptx, $(DEB_BUILD_OPTIONS)),)
+  with_offload_nvptx := disabled by DEB_BUILD_OPTIONS
 endif
 with_offload_nvptx := $(call envfilt, nvptx, , , $(with_offload_nvptx))
 
@@ -744,7 +842,7 @@ endif
 ifneq (,$(findstring gccgo,$(PKGSOURCE)))
   with_ada :=
 endif
-ifneq (,$(filter $(distrelease),lucid))
+ifneq (,$(filter $(distrelease),lucid precise))
   with_ada :=
 endif
 with_ada := $(call envfilt, ada, , , $(with_ada))
@@ -759,7 +857,7 @@ endif
 
 ifneq ($(with_separate_gnat),yes)
   ifeq ($(with_ada),yes)
-    ifneq (,$(filter $(distrelease),squeeze lucid))
+    ifneq (,$(filter $(distrelease),squeeze lucid precise))
       with_ada :=
     endif
   endif
@@ -1426,6 +1524,9 @@ else
   ifeq ($(hppa64_no_snap)-$(trunk_build),yes-yes)
     with_hppa64 := disabled for snapshot build
   endif
+  ifneq ($(findstring nohppa64, $(DEB_BUILD_OPTIONS)),)
+    with_hppa64 := disabled by DEB_BUILD_OPTIONS
+  endif
   with_hppa64 := $(call envfilt, hppa64, , , $(with_hppa64))
 
   ifeq ($(DEB_STAGE),rtlibs)
@@ -1453,7 +1554,7 @@ endif
 # run testsuite ---------------
 with_check := yes
 # if you don't want to run the gcc testsuite, uncomment the next line
-#with_check := disabled by hand
+with_check := disabled by hand
 ifeq ($(with_base_only),yes)
   with_check := no
 endif

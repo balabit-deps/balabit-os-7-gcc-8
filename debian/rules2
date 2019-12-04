@@ -19,7 +19,7 @@ IP	= install -m 755	# Install program
 IS	= install -m 755	# Install script
 
 DWZ	= dwz
-ifneq (,$(filter $(distrelease),jessie stretch trusty xenial))
+ifneq ($(with_dwz),yes)
   DWZ	= : dwz
 endif
 
@@ -349,7 +349,11 @@ endif # !DEB_STAGE
 CONFARGS += --with-system-zlib
 
 ifeq ($(with_phobos),yes)
-  CONFARGS += --with-target-system-zlib
+  ifeq ($(DEB_CROSS),yes)
+    CONFARGS += --without-target-system-zlib
+  else
+    CONFARGS += --with-target-system-zlib=auto
+  endif
 endif
 
 ifeq ($(with_d),yes)
@@ -798,6 +802,12 @@ else ifeq ($(with_bootstrap),)
   endif
 endif
 
+ifeq ($(with_lto_build),yes)
+  CONFARGS += \
+	--with-build-config=bootstrap-lto \
+	--enable-link-mutex
+endif
+
 DEJAGNU_TIMEOUT=300
 # Increase the timeout for one testrun on slow architectures
 ifeq ($(derivative),Debian)
@@ -1017,7 +1027,12 @@ define install_gcc_lib
 	rm -f $(d)/$(usr_lib$(3))/$(1)*.{la,so}
 	dh_link -p$(4) \
 	  /$(usr_lib$(3))/$(1).so.$(2) /$(gcc_lib_dir$(3))/$(1).so
+endef
 
+# do_strip_lib_dbg(pkg,pkg_dbg,version,excludes)
+define do_strip_lib_dbg
+	dh_strip -p$(strip $(1)) $(4) \
+	  $(if $(with_dbg),--dbg-package=$(strip $(2)),--dbgsym-migration='$(strip $(2)) (<< $(strip $(3)))')
 endef
 
 checkdirs = $(builddir)
@@ -1305,6 +1320,8 @@ $(configure_jit_stamp): $(build_stamp)
 	touch $(configure_jit_stamp)
 
 $(build_jit_stamp): $(configure_jit_stamp)
+	( \
+	  set +e; \
 	  $(SET_PATH) \
 	  $(SET_SHELL) \
 	  $(SET_LOCPATH) \
@@ -1312,7 +1329,21 @@ $(build_jit_stamp): $(configure_jit_stamp)
 	  biarch_multidir_names=none \
 		$(MAKE) -C $(builddir_jit) \
 		$(call pass_vars, BOOT_CFLAGS       BOOT_LDFLAGS \
-		                  CFLAGS_FOR_TARGET LDFLAGS_FOR_TARGET)
+		                  CFLAGS_FOR_TARGET LDFLAGS_FOR_TARGET) \
+		; \
+	  echo $$? > status; \
+	) 2>&1 | tee jit-protocol
+
+	s=`cat status`; rm -f status; \
+	if [ $$s -ne 0 ] && [ -z "$$NO_CONFIG_LOG_DUMP$$NO_CONFIG_LOG_DUMPS" ]; then \
+	  for log in $$(find $(builddir_jit) -name config.log); do \
+	    case "$$log" in */build/build-*|*/stage1-*|*/prev-*) continue; esac; \
+	    echo LOGFILE START $$log; \
+	    cat $$log; \
+	    echo LOGFILE END $$log; \
+	  done; \
+	fi; \
+	test $$s -eq 0
 
 ifeq ($(with_check),yes)
   # FIXME: #782444
@@ -1346,7 +1377,9 @@ ifeq ($(versioned_packages),yes)
 endif
 
 # FIXME: must not be run in parrallel with jit and hppa64 builds ...
-$(configure_nvptx_stamp): $(build_stamp)
+$(configure_nvptx_stamp): $(build_stamp) \
+    $(if $(filter yes, $(with_jit)), $(build_jit_stamp)) \
+    $(if $(filter yes, $(with_hppa64)), $(build_hppa64_stamp))
 	dh_testdir
 	rm -f $(configure_nvptx_stamp) $(build_nvptx_stamp)
 	rm -rf $(builddir_nvptx)
@@ -1368,6 +1401,8 @@ $(build_nvptx_stamp): $(configure_nvptx_stamp) \
     $(if $(filter yes, $(with_hppa64)), $(build_hppa64_stamp))
 	ln -sf ../$(nl_nvptx_srcdir)/newlib $(srcdir)/newlib
 
+	( \
+	  set +e; \
 	  $(SET_PATH) \
 	  $(SET_SHELL) \
 	  $(SET_LOCPATH) \
@@ -1375,7 +1410,21 @@ $(build_nvptx_stamp): $(configure_nvptx_stamp) \
 	  biarch_multidir_names=none \
 		$(MAKE) -C $(builddir_nvptx) \
 		$(call pass_vars, BOOT_CFLAGS       BOOT_LDFLAGS \
-		                  CFLAGS_FOR_TARGET)
+		                  CFLAGS_FOR_TARGET) \
+		; \
+	  echo $$? > status; \
+	) 2>&1 | tee nvptx-protocol
+
+	s=`cat status`; rm -f status; \
+	if [ $$s -ne 0 ] && [ -z "$$NO_CONFIG_LOG_DUMP$$NO_CONFIG_LOG_DUMPS" ]; then \
+	  for log in $$(find $(builddir_nvptx) -name config.log); do \
+	    case "$$log" in */build/build-*|*/stage1-*|*/prev-*) continue; esac; \
+	    echo LOGFILE START $$log; \
+	    cat $$log; \
+	    echo LOGFILE END $$log; \
+	  done; \
+	fi; \
+	test $$s -eq 0
 
 ifeq ($(with_check),yes)
 #	-$(MAKE) -C $(builddir_nvptx)/gcc check-jit \
@@ -1388,7 +1437,8 @@ ifeq ($(versioned_packages),yes)
   hppa64_configure_flags += --program-suffix=-$(BASE_VERSION)
 endif
 
-$(configure_hppa64_stamp): $(build_stamp)
+$(configure_hppa64_stamp): $(build_stamp) \
+    $(if $(filter yes, $(with_jit)), $(build_jit_stamp))
 	dh_testdir
 	rm -f $(configure_hppa64_stamp) $(build_hppa64_stamp)
 	rm -rf $(builddir_hppa64)
@@ -1423,7 +1473,15 @@ $(configure_hppa64_stamp): $(build_stamp)
 		--target=hppa64-linux-gnu
 	touch $(configure_hppa64_stamp)
 
-$(build_hppa64_stamp): $(configure_hppa64_stamp)
+$(build_hppa64_stamp): $(configure_hppa64_stamp) \
+    $(if $(filter yes, $(with_jit)), $(build_jit_stamp))
+	if [ -f $(srcdir)/gcc/distro-defaults.h ]; then \
+	  if [ ! -f $(srcdir)/gcc/distro-defaults.h.saved ]; then \
+	    mv $(srcdir)/gcc/distro-defaults.h $(srcdir)/gcc/distro-defaults.h.saved; \
+	  fi; \
+	  echo '/* Empty distro-defaults for hppa64 cross build */' \
+	    > $(srcdir)/gcc/distro-defaults.h; \
+	fi
 	  $(SET_PATH) \
 	  $(SET_SHELL) \
 	  $(SET_LOCPATH) \
@@ -1431,9 +1489,13 @@ $(build_hppa64_stamp): $(configure_hppa64_stamp)
 	    $(MAKE) -C $(builddir_hppa64) \
 		$(call pass_vars, \
 		  CFLAGS_FOR_TARGET CXXFLAGS_FOR_TARGET LDFLAGS_FOR_TARGET)
+	if [ -f $(srcdir)/gcc/distro-defaults.h.saved ]; then \
+	  mv -f $(srcdir)/gcc/distro-defaults.h.saved $(srcdir)/gcc/distro-defaults.h; \
+	fi
 	touch $(build_hppa64_stamp)
 
-$(configure_neon_stamp): $(build_stamp)
+$(configure_neon_stamp): $(build_stamp) \
+    $(if $(filter yes, $(with_jit)), $(build_jit_stamp))
 	dh_testdir
 	rm -f $(configure_neon_stamp) $(build_neon_stamp)
 	rm -rf $(builddir_neon)
@@ -1459,7 +1521,8 @@ $(configure_neon_stamp): $(build_stamp)
 		--target=arm-linux-gnueabi
 	touch $(configure_neon_stamp)
 
-$(build_neon_stamp): $(configure_neon_stamp)
+$(build_neon_stamp): $(configure_neon_stamp) \
+    $(if $(filter yes, $(with_jit)), $(build_jit_stamp))
 	  $(SET_PATH) \
 	  $(SET_SHELL) \
 	  $(SET_LOCPATH) \

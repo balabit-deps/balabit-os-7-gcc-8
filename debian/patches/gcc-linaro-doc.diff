@@ -1,6 +1,6 @@
-# DP: Changes for the Linaro 8-2018.xx snapshot (documentation).
+# DP: Changes for the Linaro 8-2019.02 snapshot (documentation).
 
-LANG=C svn diff svn://gcc.gnu.org/svn/gcc/branches/gcc-8-branch@268147 svn://gcc.gnu.org/svn/gcc/branches/ARM/arm-8-branch \
+LANG=C svn diff svn://gcc.gnu.org/svn/gcc/branches/gcc-8-branch@269117 svn://gcc.gnu.org/svn/gcc/branches/ARM/arm-8-branch \
 	| sed -r 's,^--- (\S+)\t(\S+)(.*)$,--- a/src/\1\t\2,;s,^\+\+\+ (\S+)\t(\S+)(.*)$,+++ b/src/\1\t\2,' \
 	| awk '/^Index:.*\.class/ {skip=1; next} /^Index:/ { skip=0 } skip==0'
 
@@ -23,7 +23,7 @@ Index: gcc/doc/extend.texi
 ===================================================================
 --- a/src/gcc/doc/extend.texi	(.../gcc-8-branch)
 +++ b/src/gcc/doc/extend.texi	(.../ARM/arm-8-branch)
-@@ -11080,6 +11080,7 @@
+@@ -11370,6 +11370,7 @@
  @findex __builtin_powi
  @findex __builtin_powif
  @findex __builtin_powil
@@ -31,7 +31,7 @@ Index: gcc/doc/extend.texi
  @findex _Exit
  @findex _exit
  @findex abort
-@@ -11723,6 +11724,96 @@
+@@ -12013,6 +12014,96 @@
  
  @end deftypefn
  
@@ -201,7 +201,7 @@ Index: gcc/doc/invoke.texi
  
  @emph{Adapteva Epiphany Options}
  @gccoptlist{-mhalf-reg-file  -mprefer-short-insn-regs @gol
-@@ -14702,6 +14702,14 @@
+@@ -14704,6 +14704,14 @@
  precision of division results to about 16 bits for
  single precision and to 32 bits for double precision.
  
