@@ -1,0 +1,7 @@
+# DP: updates from the 8 branch upto 20200227 (39338122adb).
+
+LANG=C git diff --no-renames --src-prefix=a/src/ --dst-prefix=b/src/ \
+        4c44b708f11eec6fc02456e8577708d01ca92327 39338122adb31c9fe3ff3c95386f3a492615a242 \
+	| awk '/^diff .*\.texi/ {skip=1; next} /^diff / { skip=0 } skip==0' \
+	| grep -v -E '^(diff|index)'
+

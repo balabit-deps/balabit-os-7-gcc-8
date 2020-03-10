@@ -1,3 +1,113 @@
+gcc-8 (8.4.0-1ubuntu1~18.04) bionic-proposed; urgency=medium
+
+  * SRU: LP: #1866835.
+  * Backport the GCC 8.4.0 release to 18.04 LTS.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 10 Mar 2020 13:29:54 +0100
+
+gcc-8 (8.4.0-1ubuntu1) focal; urgency=medium
+
+  * GCC 8.4.0 release.
+
+ -- Matthias Klose <doko@ubuntu.com>  Wed, 04 Mar 2020 12:00:13 +0100
+
+gcc-8 (8.4.0-1) unstable; urgency=medium
+
+  * GCC 8.4.0 release.
+    - Fix PR target/91276 (PPC), PR tree-optimization/93820,
+      PR rtl-optimization/93908, PR tree-optimization/93767,
+      PR tree-optimization/93434, PR middle-end/92768,
+      PR tree-optimization/92420, PR middle-end/90313, PR c++/92003,
+      PR target/93658 (PPC), PR target/93568 (PPC), PR target/93828 (x86),
+      PR target/93656 (x86), PR c++/93905, PR c++/90998, PR c++/86521,
+      PR c++/90546, PR c++/86521, PR c++/89831, PR c++/88380, PR c++/87685,
+      PR c++/86747, PR c++/86429, PR c++/82643, PR c++/87327, PR c++/87748,
+      PR c++/87480, PR c++/88394, PR c++/87770, PR c++/92745, PR c++/89917,
+      PR c++/90951, PR c++/93140, PR c++/92852, PR fortran/93714,
+      PR libstdc++/93205, PR libstdc++/92886, PR libstdc++/93325,
+      PR libstdc++/93562, PR libstdc++/92376, PR libstdc++/78552,
+      PR libstdc++/91947, PR libstdc++/81091, PR libstdc++/91947,
+      PR other/93965, PR target/91276 (PPC).
+
+ -- Matthias Klose <doko@debian.org>  Wed, 04 Mar 2020 11:14:02 +0100
+
+gcc-8 (8.3.0-29ubuntu2) focal; urgency=medium
+
+  * GCC 8.4.0 release candidate.
+  * Update to git 20200227 from the gcc-8 branch.
+    - Fix PR target/91276 (PPC), PR tree-optimization/93820,
+      PR rtl-optimization/93908, PR tree-optimization/93767,
+      PR tree-optimization/93434, PR middle-end/92768,
+      PR tree-optimization/92420, PR middle-end/90313, PR c++/92003,
+      PR target/93658 (PPC), PR target/93568 (PPC), PR target/93828 (x86),
+      PR target/93656 (x86), PR c++/93905, PR c++/90998, PR c++/86521,
+      PR c++/90546, PR c++/86521, PR c++/89831, PR c++/88380, PR c++/87685,
+      PR c++/86747, PR c++/86429, PR c++/82643, PR c++/87327, PR c++/87748,
+      PR c++/87480, PR c++/88394, PR c++/87770, PR c++/92745, PR c++/89917,
+      PR c++/90951, PR c++/93140, PR c++/92852, PR fortran/93714,
+      PR libstdc++/93205, PR libstdc++/92886, PR libstdc++/93325,
+      PR libstdc++/93562, PR libstdc++/92376, PR libstdc++/78552,
+      PR libstdc++/91947, PR libstdc++/81091, PR libstdc++/91947.
+
+ -- Matthias Klose <doko@ubuntu.com>  Fri, 28 Feb 2020 13:26:48 +0100
+
+gcc-8 (8.3.0-29ubuntu1) focal; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Build from upstream sources.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 18 Feb 2020 14:41:23 +0100
+
+gcc-8 (8.3.0-29) unstable; urgency=medium
+
+  * Update to git 20200218 from the gcc-8 branch.
+    - Fix PR tree-optimization/93381, PR tree-optimization/93439,
+      PR middle-end/93054, PR debug/92763, PR tree-optimization/92704,
+      PR middle-end/92674, PR target/93724 (x86), PR tree-optimization/93744,
+      PR target/93704 (SPARC), PR target/93696 (x86), PR target/93673 (x86),
+      PR target/93670 (x86), PR target/93637 (x86), PR target/65782 (x86),
+      PR libgomp/93515, PR middle-end/93555, PR middle-end/93505,
+      PR rtl-optimization/93402, PR target/91298 (x86), PR target/93333 (RISCV),
+      PR target/93073 (PPC), PR inline-asm/93202, PR rtl-optimization/93088,
+      PR ipa/93087, PR ipa/92357, PR tree-optimization/92930,
+      PR target/92904 (x86), PR target/92723, PR debug/92664,
+      PR target/92615 (x86), PR middle-end/93246, PR rtl-optimization/91838,
+      PR c++/61414, PR c/93576, PR c++/61414, PR c++/93228, PR c++/92438,
+      PR c++/92992, PR c++/92732, PR c++/60228, PR c++/92524, PR c++/92648,
+      PR c++/61414, PR c++/90842, PR fortran/93463, PR fortran/93329,
+      PR fortran/92977, PR fortran/92899, PR fortran/92781, PR fortran/91944,
+      PR fortran/93541, PR libgomp/93515, PR libgomp/93065, PR sanitizer/92154,
+      PR sanitizer/92154.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 18 Feb 2020 14:37:47 +0100
+
+gcc-8 (8.3.0-28) unstable; urgency=medium
+
+  * Sourceful no-change upload. Closes: #950632.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 04 Feb 2020 12:57:33 +0100
+
+gcc-8 (8.3.0-27) unstable; urgency=medium
+
+  * Update to git 20200203 from the gcc-8 branch.
+    - Fix PR libgomp/93066, PR lto/89358, PR ipa/92971, PR target/93182 (AVR),
+      PR target/93111 (PARISC), PR rtl-optimization/92591,
+      PR target/92545 (AVR), PR target/92950 (S390), PR c/93072, PR c/93241,
+      PR c++/92859, PR fortran/84135, PR fortran/92961, PR middle-end/91226,
+      PR libstdc++/93201, PR target/92692 (AArch64), PR c/93348, PR c++/91826,
+      PR c++/92852.
+  * Fix buffer overflow in the gcc-search-prefixed-as-ld patch.
+    Addresses: #946792.
+  * Refresh patches.
+  * Dump the config.log for the configure step when it fails.
+  * On architectures where libgcc_s.so is a symlink, replace the symlink with
+    a simple linker script.
+  * libgcc-dev: Don't ship a libgcc_so.1 symlink in gcclibdir.
+    Addresses: #950525.
+  * Bump standards version.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 03 Feb 2020 08:07:47 +0100
+
 gcc-8 (8.3.0-26ubuntu1~18.04) bionic-proposed; urgency=medium
 
   * SRU: LP: #1848319.

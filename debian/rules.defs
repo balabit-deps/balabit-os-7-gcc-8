@@ -356,6 +356,9 @@ ifneq ($(trunk_build),yes)
     with_lto_build :=
   endif
 
+  # Don't bother with lto in GCC 8, takes ages to build ...
+  with_lto_build :=
+
   # FIXME: newer binutils needed?
   ifneq (,$(filter $(distrelease),precise trusty xenial bionic))
     with_bootstrap :=
@@ -1355,6 +1358,7 @@ else ifeq ($(distribution),Ubuntu)
   ifeq (,$(filter $(distrelease),lucid precise trusty utopic vivid wily xenial yakkety zesty))
     pie_archs += armhf arm64 i386
   endif
+  pie_archs += riscv64
 endif
 ifneq (,$(filter $(DEB_TARGET_ARCH),$(pie_archs)))
   with_pie := yes
